@@ -107,5 +107,5 @@
   color: white;
 }
 .cl-footerActionLink{
-  @apply text-blue-600 underline hover:text-blue-500
+  @apply text-blue-600 underline hover:text-blue-500 
 }
