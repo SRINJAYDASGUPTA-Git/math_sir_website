@@ -21,6 +21,7 @@ export default function RootLayout({
       appearance={{
         layout: {
           socialButtonsVariant: "iconButton",
+          logoImageUrl:'/logo.svg'
         },
         variables: {
           colorPrimary: "#FDD7BB",
