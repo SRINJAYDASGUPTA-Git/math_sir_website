@@ -17,7 +17,7 @@ const SignInPage = () => {
             <p className='text-3xl md:text-5xl'>
                 Because of Maths
             </p>
-            <p className='hidden md:block'>
+            <p className='hidden md:block text-[24px]'>
             Master math for boards & entrance exams with our comprehensive courses & expert guidance!
             </p>
             </div>
