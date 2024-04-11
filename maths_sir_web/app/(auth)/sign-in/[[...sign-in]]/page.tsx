@@ -13,7 +13,7 @@ const SignInPage = () => {
                 height={0}
                 className='p-3 md:w-[300px]'
             />
-            <div className='flex flex-col gap-1 w-[50%]'>
+            <div className='flex flex-col gap-1 w-full '>
             <p className='text-3xl md:text-5xl'>
                 Because of Maths
             </p>
