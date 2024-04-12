@@ -16,3 +16,15 @@ export const navLinks = [
     label:'Courses'
   }
 ];
+
+export const slideImage = [
+  {
+    url:'/slideimage1.jpg'
+  },
+  {
+    url:'/slideimage2.jpg'
+  },
+  {
+    url:'/slideimage3.jpg'
+  }
+]

@@ -34,8 +34,8 @@ const Navbar = () => {
   }, [controlNavbar]);
   return (
     <nav
-      className={`border-b text-xl w-full ps-5 pe-3 py-2 flex justify-between bg-gradient-to-b from-[#9747FF]/50 to-[#FFFFFF]/10 backdrop-blur-md top-0 left-0 sticky z-10 transition-transform duration-300 transform ${
-        show ? "translate-y-0" : "-translate-y-full"
+      className={`text-xl w-full ps-5 pe-3 py-2 flex justify-between bg-gradient-to-b from-[#9747FF]/50 to-[#FFFFFF]/10 backdrop-blur-md top-0 left-0 sticky z-10 transition-transform duration-300 transform ${
+        show ? "bg-gradient-to-b from-[#9747FF]/50 to-[#FFFFFF]/10" : "bg-gradient-to-b from-[#9E53FF]/80 to-[#C8A8F1]/70"
       }`}
     >
       <Link href={"/"}>
