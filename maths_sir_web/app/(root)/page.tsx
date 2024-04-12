@@ -17,7 +17,7 @@ export default function Home() {
     Autoplay({ delay: 2000, stopOnInteraction: false })
   );
   return (
-    <main className="bg-[url('/bg-signin.jpeg')] bg-cover py-5 h-[100vh]">
+    <main className="bg-[url('/bg-signin.jpeg')] bg-cover py-5 h-[100vh] flex-center flex-col p-5">
       {/*First Section with Motto and Slideshow*/}
       <section className="flex-between h-screen w-full p-20">
         <div className="flex items-center justify-between w-full">
@@ -36,19 +36,20 @@ export default function Home() {
               plugins={[plugin.current]}
               onMouseEnter={plugin.current.stop}
               onMouseLeave={plugin.current.play}
-              className="w-full flex-center"
+              className="w-full flex-center h-[500px] bg-transparent rounded-3xl"
             >
               <CarouselContent>
                 {slideImage.map((img) => (
-                  <Image
-                    key={img.url}
-                    src={img.url}
-                    width={500}
-                    height={500}
-                    sizes={"100vw"}
-                    className="w-full"
-                    alt={"slide"}
-                  />
+                  <CarouselItem key={img.url} className="flex-center">
+                    <Image
+                      src={img.url}
+                      width={500}
+                      height={500}
+                      alt={"slide"}
+                      className="rounded-3xl w-[80%]"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </CarouselItem>
                 ))}
               </CarouselContent>
             </Carousel>
@@ -56,8 +57,11 @@ export default function Home() {
         </div>
       </section>
       {/*About Section*/}
-      <section className=" group w-[90%] p-20 rounded-3xl flex flex-col gap-10">
-          <span className="text-5xl mx-5 group-hover:underline">About</span>
+      <section className=" group w-[100%] p-20 rounded-3xl flex flex-col gap-10 bg-white">
+        <span className="text-5xl mx-5 group-hover:underline">About</span>
+        <div className="flex-between ">
+
+        </div>
       </section>
     </main>
   );
