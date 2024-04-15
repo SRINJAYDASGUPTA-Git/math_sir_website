@@ -1,13 +1,13 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 const protectedRoutes = createRouteMatcher([
-  '/',
+  '/courses/(.*)',
 ])
- 
+
 export default clerkMiddleware((auth, req)=>{
   if(protectedRoutes(req)) auth().protect()
 })
- 
+
 export const config = {
   matcher: [
     '/((?!.*\\..*|_next).*)', // Don't run middleware on static files
