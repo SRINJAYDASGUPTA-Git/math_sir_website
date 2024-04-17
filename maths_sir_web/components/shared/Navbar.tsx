@@ -44,7 +44,7 @@ const Navbar = () => {
           width={50}
           height={200}
           alt="Logo"
-          className="md:w-[80px]"
+          className="md:w-[60px]"
         />
       </Link>
       <div className="flex-center justify-between gap-10">
