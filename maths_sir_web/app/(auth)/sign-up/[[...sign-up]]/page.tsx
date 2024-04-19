@@ -21,7 +21,7 @@ const SignUpPage = () => {
           </p>
         </div>
       </div>
-      <SignUp />
+      <SignUp afterSignUpUrl={'/onboarding'} />
     </main>
   );
 };

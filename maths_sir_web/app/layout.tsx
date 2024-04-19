@@ -4,7 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/shared/Navbar";
 
-const inter = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
+const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Because of Maths",
@@ -31,7 +31,7 @@ export default function RootLayout({
           },
         }}
       >
-        <body className={inter.className}>
+        <body className={roboto.className}>
           <Navbar />
           {children}
         </body>

@@ -44,10 +44,10 @@ const Navbar = () => {
           width={50}
           height={200}
           alt="Logo"
-          className="md:w-[60px]"
+          className="md:w-[80px]"
         />
       </Link>
-      <div className="flex-center justify-between gap-10">
+      <div className="flex-center justify-between gap-2 md:gap-10 text-[13px] md:text-2xl ">
         {navLinks.map((link) => (
           <Link href={link.href} key={link.label}>
             {link.label}
@@ -58,7 +58,7 @@ const Navbar = () => {
           <UserButton afterSignOutUrl="/" showName/>
         </SignedIn>
         <SignedOut>
-          <div className="flex items-center justify-center font-bold rounded-full p-2 px-4 bg-[#FDD7BB]">
+          <div className="flex items-center justify-center font-bold rounded-full md:p-2 px-2 md:px-4 bg-[#FDD7BB] text-[11px] md:text-xl">
           <SignInButton  />
           </div>
         </SignedOut>

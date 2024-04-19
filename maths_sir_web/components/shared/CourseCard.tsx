@@ -10,7 +10,10 @@ const CourseCard = ({
     title: string,
 }) => {
   return (
-    <div>CourseCard</div>
+    <div className=''>
+      {title}
+      <img src={image} alt={id} />
+    </div>
   )
 }
 
