@@ -34,7 +34,7 @@ const Navbar = () => {
   }, [controlNavbar]);
   return (
     <nav
-      className={`text-xl w-full ps-5 pe-3 py-2 flex justify-between bg-gradient-to-b from-[#9747FF]/50 to-[#FFFFFF]/10 backdrop-blur-md top-0 left-0 sticky z-10 transition-transform duration-300 transform ${
+      className={`text-xl w-full ps-5 pe-10 flex justify-between bg-gradient-to-b from-[#9747FF]/50 to-[#FFFFFF]/10 backdrop-blur-md top-0 left-0 sticky z-10 transition-transform duration-300 transform ${
         show ? "bg-gradient-to-b from-[#9747FF]/50 to-[#FFFFFF]/10" : "bg-gradient-to-b from-[#9E53FF]/80 to-[#C8A8F1]/70"
       }`}
     >
@@ -44,10 +44,10 @@ const Navbar = () => {
           width={50}
           height={200}
           alt="Logo"
-          className="md:w-[80px]"
+          className="md:w-[60px]"
         />
       </Link>
-      <div className="flex-center justify-between gap-2 md:gap-10 text-[13px] md:text-2xl ">
+      <div className="flex-center justify-between gap-2 md:gap-10 text-[13px] md:text-lg ">
         {navLinks.map((link) => (
           <Link href={link.href} key={link.label}>
             {link.label}
@@ -58,7 +58,7 @@ const Navbar = () => {
           <UserButton afterSignOutUrl="/" showName/>
         </SignedIn>
         <SignedOut>
-          <div className="flex items-center justify-center font-bold rounded-full md:p-2 px-2 md:px-4 bg-[#FDD7BB] text-[11px] md:text-xl">
+          <div className="flex items-center justify-center rounded-2xl shadow md:p-1 px-2 md:px-5 bg-[#FDD7BB] text-[11px] md:text-lg">
           <SignInButton  />
           </div>
         </SignedOut>
