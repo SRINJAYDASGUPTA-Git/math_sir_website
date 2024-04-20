@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/nextjs";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -16,7 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { courseData } from "@/constants";
+import { classData, courseData } from "@/constants";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 import Image from "next/image";
@@ -24,12 +24,12 @@ import { addUsersToDB } from "@/utils";
 import { useRouter } from "next/navigation";
 const Onboarding = () => {
   const { user } = useUser();
-  const [name, setName] = useState<string>(user?.fullName || "");
-  const [email, setEmail] = useState<string>(user?.emailAddresses[0].emailAddress || "");
+  const [open, setOpen] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [number, setNumber] = useState<string>("");
   const [school, setSchool] = useState<string>("");
-  const [course, setCourse] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(false);
+  const [std, setStd] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
   const handleAddUser = () => {
@@ -38,14 +38,22 @@ const Onboarding = () => {
       email: email as string,
       phoneNumber: number,
       school,
-      course,
+      courses: [],
+      class: std,
     });
     router.push("/");
+  };
 
-  }
+  useEffect(() => {
+    if (user) {
+      setName(user.fullName || "");
+      setEmail(user.emailAddresses[0].emailAddress || "");
+    }
+  }, [user]);
+  console.log(email);
+  console.log(user?.fullName, name);
 
-  console.log(user?.emailAddresses[0].emailAddress, email)
-  console.log(user?.fullName, name)
+  if (!user) return <div>Loading...</div>;
   return (
     <div className="w-full flex-center">
       <div className="w-[90%] flex-between bg-[#FEF5EA] rounded-xl">
@@ -86,7 +94,7 @@ const Onboarding = () => {
             <Input
               type="email"
               id="email"
-              value={email as string}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
             />
@@ -104,7 +112,7 @@ const Onboarding = () => {
           </div>
           {/* Course */}
           <div className="flex flex-col gap-3">
-            <label htmlFor="name">Class/Course</label>
+            <label htmlFor="name">Class</label>
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
                 <Button
@@ -113,37 +121,34 @@ const Onboarding = () => {
                   aria-expanded={open}
                   className="w-full justify-start text-[#333] "
                 >
-                  {course
-                    ? courseData.find((courseD) => courseD.title === course)
-                        ?.title
-                    : "Select Course..."}
+                  {std
+                    ? classData.find((classD) => classD.title === std)?.title
+                    : "Select Class..."}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-[45vw] p-3 text-[#333] ">
                 <Command>
                   <CommandInput
-                    placeholder="Search activity level..."
+                    placeholder="Search Class..."
                     className="h-9 p-1 text-[#333] "
                   />
                   <CommandList>
                     <CommandEmpty>No framework found.</CommandEmpty>
                     <CommandGroup>
-                      {courseData.map((courseD) => (
+                      {classData.map((courseD) => (
                         <CommandItem
                           key={courseD.id}
                           value={courseD.title}
                           className="text-[#333] "
                           onSelect={(currentValue) => {
-                            setCourse(
-                              currentValue === course ? "" : currentValue
-                            );
+                            setStd(currentValue === std ? "" : currentValue);
                             setOpen(false);
                           }}
                         >
                           <Check
                             className={cn(
                               "mr-2 h-4 w-4",
-                              course === courseD.title
+                              std === courseD.title
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}
@@ -159,7 +164,10 @@ const Onboarding = () => {
           </div>
           {/* Submit */}
           <div className="flex flex-col gap-3">
-            <Button className="p-3 rounded-lg bg-[#FFA15A] text-white w-fit " onClick={handleAddUser}>
+            <Button
+              className="p-3 rounded-lg bg-[#FFA15A] text-white w-fit "
+              onClick={handleAddUser}
+            >
               Continue
             </Button>
           </div>
@@ -169,12 +177,8 @@ const Onboarding = () => {
           <Image
             src="/onboarding-img.png"
             alt="Onboarding"
-            width={
-              500
-            }
-            height={
-              500
-            }
+            width={500}
+            height={500}
             className="w-full"
           />
         </section>

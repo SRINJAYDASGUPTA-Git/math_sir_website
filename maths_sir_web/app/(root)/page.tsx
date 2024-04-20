@@ -19,7 +19,7 @@ export default function Home() {
   );
   return (
     <main className="py-5 h-full flex-center flex-col p-3 md:p-10 gap-10">
-      <Image src="/bg.png" width={200} height={200} sizes="100vw" className="fixed -z-10 top-0 h-screen w-full bg-cover" />
+      <Image src="/bg.png" width={200} height={200} sizes="100vw" className="fixed -z-10 top-0 h-screen w-full bg-cover" alt="bg"/>
       {/*First Section with Motto and Slideshow*/}
       <section className="flex flex-col md:flex-row items-center justify-between w-full gap-14 mt-[20%] md:mt-1">
         <div className={"w-full md:w-1/2 ps-5 flex items-start flex-col"}>
@@ -98,14 +98,16 @@ export default function Home() {
       </section>
 
       {/* Courses Section */}
-      <section className="group w-[100%] p-4 py-5 md:p-20 rounded-3xl flex flex-col gap-10 bg-[#FBFBFB]" id="#courses">
+      <section className="w-[100%] p-4 py-5 md:p-20 rounded-3xl flex flex-col gap-10 bg-[#FBFBFB]" id="#courses">
+        <div className="group w-full">
         <span className="text-3xl md:text-5xl mx-5 group-hover:underline">
           Explore Courses
         </span>
+        </div>
         <div className="w-full p-5 flex-center">
           <Carousel
             opts={{
-              align: "center",
+              align: "end",
             }}
             className="w-[80%] justify-center items-center flex"
           >
@@ -113,7 +115,7 @@ export default function Home() {
               {courseData.map((course) => (
                 <CarouselItem
                   key={course.id}
-                  className="md:basis-1/2 lg:basis-1/4 "
+                  className="md:basis-1/2 lg:basis-1/4 flex place-items-end "
                 >
                   <CourseCard {...course} />
                 </CarouselItem>
