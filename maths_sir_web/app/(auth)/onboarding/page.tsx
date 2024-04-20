@@ -25,11 +25,12 @@ import { useRouter } from "next/navigation";
 const Onboarding = () => {
   const { user } = useUser();
   const [name, setName] = useState<string>(user?.fullName || "");
-  const [email, setEmail] = useState(user?.emailAddresses || "");
+  const [email, setEmail] = useState<string>(user?.emailAddresses[0].emailAddress || "");
   const [number, setNumber] = useState<string>("");
   const [school, setSchool] = useState<string>("");
   const [course, setCourse] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
   const handleAddUser = () => {
     addUsersToDB({
@@ -42,6 +43,9 @@ const Onboarding = () => {
     router.push("/");
 
   }
+
+  console.log(user?.emailAddresses[0].emailAddress, email)
+  console.log(user?.fullName, name)
   return (
     <div className="w-full flex-center">
       <div className="w-[90%] flex-between bg-[#FEF5EA] rounded-xl">
