@@ -23,6 +23,7 @@ const Course = ({ params: { id } }: { params: { id: string } }) => {
   return (
     <div className="w-full flex flex-col p-10 gap-10 bg-[#E3EDF8]">
       <span>
+
         <h1 className="text-xl md:text-3xl font-bold">{course?.title}</h1>
       </span>
       <div className="w-full flex flex-col-reverse md:flex-row items-center justify-between">

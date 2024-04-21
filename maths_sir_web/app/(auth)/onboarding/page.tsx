@@ -25,7 +25,8 @@ import { useRouter } from "next/navigation";
 const Onboarding = () => {
   const { user } = useUser();
   const [open, setOpen] = useState<boolean>(false);
-  const [name, setName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [number, setNumber] = useState<string>("");
   const [school, setSchool] = useState<string>("");
@@ -34,24 +35,24 @@ const Onboarding = () => {
   const router = useRouter();
   const handleAddUser = () => {
     addUsersToDB({
-      name,
+      name: firstName + " " + lastName,
       email: email as string,
       phoneNumber: number,
       school,
       courses: [],
       class: std,
     });
+
     router.push("/");
   };
 
   useEffect(() => {
     if (user) {
-      setName(user.fullName || "");
+      setFirstName(user.firstName || "");
+      setLastName(user.lastName || "");
       setEmail(user.emailAddresses[0].emailAddress || "");
     }
   }, [user]);
-  console.log(email);
-  console.log(user?.fullName, name);
 
   if (!user) return <div>Loading...</div>;
   return (
@@ -60,22 +61,42 @@ const Onboarding = () => {
         {/* Onboarding Form */}
         <section className="w-full md:w-1/4 flex flex-col gap-10 p-8">
           <div className="flex flex-col gap-3 p-3">
-            <span className="text-[16px] font-bold">Tell us about Yourself</span>
-            <span className="text-[13px]">
+            <span className="text-[16px] md:text-5xl font-bold">
+              Tell us about Yourself
+            </span>
+            <span className="text-[13px] md:text-3xl">
               Let's get to know you! Share a few details, and let's start your
               math journey together!
             </span>
           </div>
           {/* Name */}
           <div className="flex flex-col gap-3">
-            <label htmlFor="name">Name</label>
-            <Input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
-            />
+            <div className="w-full flex flex-between gap-3">
+              <div className="flex flex-col gap-3">
+                <label htmlFor="name">First Name</label>
+                <Input
+                  type="text"
+                  id="name"
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
+                  className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+              </div>
+              <div className="flex flex-col gap-3">
+                <label htmlFor="name">Last Name</label>
+                <Input
+                  type="text"
+                  id="name"
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
+                  className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+              </div>
+            </div>
           </div>
           {/* Phone Number */}
           <div className="flex flex-col gap-3">
@@ -173,7 +194,7 @@ const Onboarding = () => {
           </div>
         </section>
         {/* Image */}
-        <section className="hidden md:w-[35%]">
+        <section className="hidden md:w-[35%] md:block">
           <Image
             src="/onboarding-img.png"
             alt="Onboarding"

@@ -26,7 +26,7 @@ export default function RootLayout({
             logoImageUrl: "/logo.svg",
           },
           variables: {
-            colorPrimary: "#FDD7BB",
+            colorPrimary: "#fc9549",
             colorText: "#000",
             colorTextOnPrimaryBackground: "#000",
           },

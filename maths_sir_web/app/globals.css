@@ -86,7 +86,7 @@
 }
 
 .cl-internal-1eekank{
-  @apply hidden md:text-xl;
+  @apply hidden md:text-xl md:block;
 }
 
 .cl-internal-1j7ahlv{

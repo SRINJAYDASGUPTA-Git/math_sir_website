@@ -11,7 +11,6 @@ const CourseCard = ({
   className,
   classNameImg,
   disableSlider,
-
 }: {
   children?: React.ReactNode;
   image: string;

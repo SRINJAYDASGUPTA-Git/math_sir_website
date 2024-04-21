@@ -26,6 +26,8 @@ export const addUsersToDB = async (user: User) => {
   });
   console.log("Document written with ID: ", user.email);
 };
+
+
 export const addCourseToUser = async (userEmail:string, course:string) => {
   try {
     const userRef = doc(db, "users", userEmail);

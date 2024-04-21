@@ -15,12 +15,12 @@ const Courses = () => {
               classNameImg="rounded-xl w-[300px]"
               disableSlider={true}
             >
-              
-                <span className=" w-full h-full flex-center bg-gray-200 text-xl md:text-3xl font-bold">{course.title}</span>
-              
+              <span className=" w-full h-full flex-center bg-gray-200 text-xl md:text-3xl font-bold">
+                {course.title}
+              </span>
             </CourseCard>
           ))}
-        </div>
+        </div>m
       </div>
     </div>
   );
