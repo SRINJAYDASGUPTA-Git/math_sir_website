@@ -56,12 +56,12 @@ const Onboarding = () => {
   if (!user) return <div>Loading...</div>;
   return (
     <div className="w-full flex-center">
-      <div className="w-[90%] flex-between bg-[#FEF5EA] rounded-xl">
+      <div className="w-[95%] md:w-[90%] flex-between bg-[#FEF5EA] rounded-xl">
         {/* Onboarding Form */}
-        <section className="w-1/4 flex flex-col gap-10 p-8">
+        <section className="w-full md:w-1/4 flex flex-col gap-10 p-8">
           <div className="flex flex-col gap-3 p-3">
-            <span className="text-3xl font-bold">Tell us about Yourself</span>
-            <span className="text-[20px]">
+            <span className="text-[16px] font-bold">Tell us about Yourself</span>
+            <span className="text-[13px]">
               Let's get to know you! Share a few details, and let's start your
               math journey together!
             </span>
@@ -173,7 +173,7 @@ const Onboarding = () => {
           </div>
         </section>
         {/* Image */}
-        <section className="w-[35%]">
+        <section className="hidden md:w-[35%]">
           <Image
             src="/onboarding-img.png"
             alt="Onboarding"

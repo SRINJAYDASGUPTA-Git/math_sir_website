@@ -86,9 +86,9 @@
 }
 
 .cl-internal-1eekank{
-  @apply text-xl;
+  @apply hidden md:text-xl;
 }
 
 .cl-internal-1j7ahlv{
-  @apply w-[40px] h-[40px]
+  @apply w-[20px] h-[20px] md:w-[40px] md:h-[40px]
 }

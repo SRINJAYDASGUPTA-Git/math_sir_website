@@ -22,7 +22,7 @@ const SignInPage = () => {
             </p>
             </div>
         </div>
-            <SignIn />
+            <SignIn afterSignUpUrl={'/onboarding'} />
     </main>
   )
 }

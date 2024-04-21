@@ -48,7 +48,7 @@ export const classData = [
   {
     id:'xii',
     title:'Class XII',
-    image:'/class/xii.jpg'
+    image:'/class/Xii.jpg'
   }
 ]
 
@@ -58,7 +58,7 @@ export const courseData = [
     title:'Class IX(CBSE)',
     image:'/courses/ix_cbse.jpg',
     description:
-      "Embark on a captivating journey through CBSE Class 9 Mathematics! We'll delve deeper into rational and irrational numbers, mastering their properties. Algebra becomes your tool to solve equations and unlock hidden secrets in expressions.<br/>Coordinates transform the world into points and lines, revealing relationships between shapes. Geometry unlocks the secrets of triangles and quadrilaterals, with theorems like the Angle Sum Theorem waiting to be discovered.<br/>Mensuration empowers you with formulas to calculate areas, volumes, and surface areas - imagine calculating the paint needed for your room! Statistics and probability develop your analytical eye, teaching you to organize data and explore the world of chance.<br/>This course transcends mere memorization. You'll develop problem-solving skills, communicate your reasoning effectively, and persevere through challenges. With the NCERT textbook and online resources as your guides, you'll be well-equipped to conquer the mathematical world. Are you ready? The adventure begins now!"
+      "Embark on a captivating journey through CBSE Class 9 Mathematics! We'll delve deeper into rational and irrational numbers, mastering their properties. Algebra becomes your tool to solve equations and unlock hidden secrets in expressions.Coordinates transform the world into points and lines, revealing relationships between shapes. Geometry unlocks the secrets of triangles and quadrilaterals, with theorems like the Angle Sum Theorem waiting to be discovered.Mensuration empowers you with formulas to calculate areas, volumes, and surface areas - imagine calculating the paint needed for your room! Statistics and probability develop your analytical eye, teaching you to organize data and explore the world of chance.This course transcends mere memorization. You'll develop problem-solving skills, communicate your reasoning effectively, and persevere through challenges. With the NCERT textbook and online resources as your guides, you'll be well-equipped to conquer the mathematical world. Are you ready? The adventure begins now!"
   }, 
   {
     id:'ix',
@@ -87,7 +87,7 @@ export const courseData = [
   {
     id:'xii',
     title:'Class XII',
-    image:'/courses/xii.jpg',
+    image:'/courses/Xii.jpg',
     description:"CBSE & ICSE Class XII Mathematics builds upon the strong foundation laid in Class XI, venturing even deeper into the captivating world of mathematics. You'll master the applications of calculus, solving complex differential equations and using integration techniques to calculate volumes, centers of mass, and work done. The concept of limits becomes central to understanding the behavior of functions as their inputs approach specific values. Relations and functions reach new heights with the exploration of inverse functions and their applications. Vectors delve into the fascinating world of 3D geometry, allowing you to solve problems involving lines, planes, and spatial relationships. Matrices take center stage as you learn powerful techniques like matrix multiplication, determinants, and eigenvalues, crucial for solving complex systems and analyzing data. Probability distributions are explored further, with concepts like hypothesis testing and statistical inference equipping you to analyze real-world data and draw meaningful conclusions. By the end of this course, you'll be well-equipped to tackle not only higher mathematics challenges but also real-world problems, applying your knowledge with confidence in various fields of study and careers."
   },
   {
