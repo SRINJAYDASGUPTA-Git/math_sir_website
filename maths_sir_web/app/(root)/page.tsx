@@ -117,7 +117,9 @@ export default function Home() {
                   key={course.id}
                   className="md:basis-1/2 lg:basis-1/4 flex place-items-end "
                 >
-                  <CourseCard {...course} />
+                  <CourseCard {...course} disableSlider={true} >
+                  <span className="w-full h-full flex-center text-xl md:hidden">{course.title}</span>
+                  </CourseCard>
                 </CarouselItem>
               ))}
             </CarouselContent>
