@@ -20,7 +20,7 @@ const Courses = () => {
               </span>
             </CourseCard>
           ))}
-        </div>m
+        </div>
       </div>
     </div>
   );

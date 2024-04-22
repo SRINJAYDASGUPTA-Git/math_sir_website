@@ -33,7 +33,6 @@ const Navbar = () => {
       };
     }
   }, [controlNavbar]);
-  console.log(user)
   return (
     <nav
       className={`text-xl w-full ps-5 pe-10 flex justify-between bg-gradient-to-b from-[#9747FF]/50 to-[#FFFFFF]/10 backdrop-blur-md top-0 left-0 sticky z-10 transition-transform duration-300 transform ${
