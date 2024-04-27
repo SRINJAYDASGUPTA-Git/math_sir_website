@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   Carousel,
   CarouselContent,
@@ -19,7 +20,7 @@ export default function Home() {
   );
   return (
     <main className="py-5 h-full flex-center flex-col p-3 md:p-10 gap-10">
-      <Image src="/bg.png" width={200} height={200} sizes="100vw" className="fixed -z-10 top-0 h-screen w-full bg-cover" alt="bg"/>
+      <Image src="/bg.png" width={200} height={200} sizes="100vw" className="fixed -z-10 top-0 h-screen w-full bg-cover" alt="bg" />
       {/*First Section with Motto and Slideshow*/}
       <section className="flex flex-col md:flex-row items-center justify-between w-full gap-14 mt-[20%] md:mt-1">
         <div className={"w-full md:w-1/2 ps-5 flex items-start flex-col"}>
@@ -31,6 +32,11 @@ export default function Home() {
             <br /> exams with our comprehensive courses
             <br /> & expert guidance!
           </span>
+          <Link href="/sign-in">
+            <div className="mt-5 ms-2 w-fit flex items-center justify-center rounded-2xl p-1 px-5 text-black bg-[#FDD7BB] text-[20px] hover:scale">
+              get Started
+            </div>
+          </Link>
         </div>
         {/*Image Carousel*/}
         <Carousel
@@ -100,9 +106,9 @@ export default function Home() {
       {/* Courses Section */}
       <section className="w-[100%] p-4 py-5 md:p-20 rounded-3xl flex flex-col gap-10 bg-[#FBFBFB]" id="#courses">
         <div className="group w-full">
-        <span className="text-3xl md:text-5xl mx-5 group-hover:underline">
-          Explore Courses
-        </span>
+          <span className="text-3xl md:text-5xl mx-5 group-hover:underline">
+            Explore Courses
+          </span>
         </div>
         <div className="w-full p-5 flex-center">
           <Carousel
@@ -118,7 +124,7 @@ export default function Home() {
                   className="md:basis-1/2 lg:basis-1/4 flex place-items-end "
                 >
                   <CourseCard {...course}>
-                  <span className="w-full h-full flex-center text-xl md:hidden">{course.title}</span>
+                    <span className="w-full h-full flex-center text-xl md:hidden">{course.title}</span>
                   </CourseCard>
                 </CarouselItem>
               ))}
@@ -131,12 +137,14 @@ export default function Home() {
 
       {/* Call to Action */}
       <section className="w-full flex flex-col gap-2">
-        <p className="md:w-[30%] md:text-5xl text-4xl p-10">
-          Join us for math adventures. Together, let's excel
+        <p className="md:text-5xl text-4xl ms-10 mt-10">
+          Join us for math<br />adventures. Together, let's<br />excel
         </p>
-        <div className="ml-10 w-fit flex items-center justify-center font-bold rounded-xl p-1 px-4 bg-[#FDD7BB] text-xl md:text-3xl">
-          Get Started
+        <Link href="/sign-in">
+        <div className="mt-5 ms-10 w-fit flex items-center justify-center rounded-2xl p-1 px-5 text-black bg-[#FDD7BB] text-xl">
+          get Started
         </div>
+        </Link>
       </section>
 
     </main>
