@@ -1,9 +1,13 @@
 import React from 'react'
+import Navbar from "@/components/shared/Navbar";
 
 const Contact = () => {
-  
+
   return (
-    <div>Contact</div>
+    <section>
+      <Navbar show={false} />
+      <div>Contact</div>
+    </section>
   )
 }
 
