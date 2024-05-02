@@ -7,7 +7,7 @@ import Link from "next/link";
 interface NavbarProps {
   show: boolean;
 }
-const Navbar: React.FC<NavbarProps> = ({ show }) => {
+const Navbar= ({show}:NavbarProps) => {
   const { user } = useUser();
 
   return (
@@ -34,12 +34,15 @@ const Navbar: React.FC<NavbarProps> = ({ show }) => {
           ))}
         </div>
         <SignedIn>
-          <div className="bg-white p-2 rounded-l-xl shadow-sm">
-            <UserButton showName afterSignOutUrl="/"/>
+          <div className="md:bg-white md:p-2 md:rounded-l-xl md:shadow-sm flex-center">
+            <UserButton showName afterSignOutUrl="/">
+              
+            </UserButton>
           </div>
+          
         </SignedIn>
         <SignedOut>
-          <div className="flex items-center pe-3 md:pe-10 justify-center rounded-2xl shadow md:p-1 px-2 md:px-5 bg-[#FDD7BB] text-[16px] md:text-lg">
+          <div className="flex items-center justify-center rounded-2xl shadow md:p-1 px-2 md:px-5 bg-[#FDD7BB] text-[10px] md:text-lg">
             <SignInButton />
           </div>
         </SignedOut>
