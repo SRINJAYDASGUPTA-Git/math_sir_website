@@ -76,7 +76,7 @@ export default function Home() {
               <br /> & expert guidance!
             </span>
             <Link href="/sign-in">
-              <div className="mt-5 ms-2 w-fit flex items-center justify-center rounded-2xl p-1 px-5 text-black bg-[#FDD7BB] text-[20px] hover:scale">
+              <div className="mt-5 ms-2 w-fit flex items-center justify-center rounded-2xl p-1 px-5 text-black bg-[#FDD7BB] text-[20px] hover:scale-105">
                 get Started
               </div>
             </Link>

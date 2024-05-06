@@ -22,7 +22,7 @@ const Contact = () => {
     message?:string
 })=>{
       console.log(name, email, number, school, std, message)
-      router.push('/');
+      router.push('/');     
   }
   return (
     <section>

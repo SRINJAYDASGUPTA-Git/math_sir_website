@@ -10,6 +10,10 @@ export const navLinks = [
   {
     href:'/courses',
     label:'Courses'
+  },
+  {
+    href:'/dashboard',
+    label:'Dashboard'
   }
 ];
 
