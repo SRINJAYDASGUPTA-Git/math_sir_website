@@ -5,6 +5,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { app, db } from "../firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 interface User {
   name: string;
@@ -37,5 +38,28 @@ export const addCourseToUser = async (userEmail:string, course:string) => {
     console.log("Course added successfully to user!", userRef);
   } catch (error) {
     console.error("Error adding course:", error);
+  }
+};
+
+export const getUserCourses = async (userEmail: string): Promise<string[] | null> => {
+  try {
+    const q = query(collection(db, "users"), where("email", "==", userEmail));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.log("No matching documents.");
+      return null;
+    }
+
+    let userCourses: string[] = [];
+
+    querySnapshot.forEach((doc) => {
+      userCourses = doc.data().courses;
+    });
+
+    return userCourses;
+  } catch (error) {
+    console.error("Error retrieving user courses:", error);
+    return null;
   }
 };
