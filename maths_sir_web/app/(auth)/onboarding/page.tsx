@@ -42,8 +42,7 @@ const Onboarding = () => {
   const form = useForm<z.infer<typeof onboardingFormSchema>>({
     resolver: zodResolver(onboardingFormSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      fullName: "",
       phoneNumber: "",
       email: "",
       school: "",
@@ -54,7 +53,7 @@ const Onboarding = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     addUsersToDB({
-      name: values.firstName + values.lastName,
+      name: values.fullName,
       email: values.email,
       phoneNumber: values.phoneNumber,
       school: values.school,
@@ -77,30 +76,13 @@ const Onboarding = () => {
             <span className="text-[13px] md:text-3xl">{subtitle}</span>
             <FormField
               control={form.control}
-              name="firstName"
+              name="fullName"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="shadcn"
-                      {...field}
-                      className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="shadcn"
+                      placeholder="John Doe"
                       {...field}
                       className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
                     />
@@ -117,7 +99,7 @@ const Onboarding = () => {
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="shadcn"
+                      placeholder="johndoe@example.com"
                       {...field}
                       className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
                     />
@@ -134,7 +116,7 @@ const Onboarding = () => {
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="shadcn"
+                      placeholder="1234567890"
                       {...field}
                       className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
                     />
@@ -151,7 +133,7 @@ const Onboarding = () => {
                   <FormLabel>School</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="shadcn"
+                      placeholder="Example High School"
                       {...field}
                       className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
                     />

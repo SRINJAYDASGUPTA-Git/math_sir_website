@@ -28,8 +28,7 @@ const Contact = () => {
   const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      fullName: "",
       email: "",
       message: "",
     },
@@ -55,37 +54,26 @@ const Contact = () => {
             </span>
             <FormField
               control={form.control}
-              name="firstName"
+              name="fullName"
               
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"/>
+                    <Input placeholder="John Doe" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            /><FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Last Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="shadcn" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /><FormField
+            />
+            <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"/>
+                    <Input placeholder="johndoe@example.com" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,7 +85,7 @@ const Contact = () => {
                 <FormItem>
                   <FormLabel>Message</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="shadcn" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0" />
+                    <Textarea placeholder="Type your message..." {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
