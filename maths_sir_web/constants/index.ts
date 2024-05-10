@@ -35,22 +35,18 @@ export const classData = [
   {
     id:'ix',
     title:'Class IX',
-    image:'/class/ix.jpg'
   },
   {
     id:'x',
     title:'Class X',
-    image:'/class/x.jpg'
   },
   {
     id:'xi',
     title:'Class XI',
-    image:'/class/xi.jpg'
   },
   {
     id:'xii',
     title:'Class XII',
-    image:'/class/Xii.jpg'
   }
 ]
 
@@ -171,10 +167,10 @@ export const courseDataSignedIn = [
 ]
 
 export const onboardingFormSchema = z.object({
-  firstName: z.string().min(2, {
+  firstName: z.string().min(1, {
     message: "First Name must be at least 2 characters.",
   }),
-  lastName: z.string().min(2, {
+  lastName: z.string().min(1, {
     message: "First Name must be at least 2 characters.",
   }),
   phoneNumber: z.string().min(10, {
@@ -183,25 +179,29 @@ export const onboardingFormSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
-  school: z.string().min(2, {
+  school: z.string().min(1, {
     message: "School Name must be at least 2 characters.",
   }),
-  std: z.string().min(2, {
-    message: "Class must be at least 2 characters.",
+  std: z.string({
+    required_error: "Please select a Class.",
   }),
 })
 
 export const contactFormSchema = z.object({
-  firstName: z.string().min(2, {
-    message: "First Name must be at least 2 characters.",
+  firstName: z.string().min(1, {
+    message: "Please enter your first name.",
   }),
-  lastName: z.string().min(2,{
-    message: "Last Name must be at least 2 characters.",
+  lastName: z.string().min(1, {
+    message: "Please enter your last name.",
   }),
   email: z.string().email({
     message: "Please enter a valid email address.",
+  }).min(1, {
+    message: "Please enter your email address.",
   }),
-  message: z.string().min(2, {
-    message: "Message must be at least 2 characters.",
-  }),
+  message: z.string().min(10, {
+    message: "Message must be at least 20 characters.",
+  }).max(500, {
+    message: "Message must be at most 500 characters.",
+  })
 })

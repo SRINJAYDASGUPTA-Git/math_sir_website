@@ -1,16 +1,9 @@
-'use client'
-import Form from '@/components/shared/Form'
+import React from 'react'
 
-const page = () => {
-  const onSubmit = () => {
-    console.log('contact')
-  }
+const test = () => {
   return (
-    <Form 
-      type='contact'
-      onSubmit={onSubmit} // Fix: Pass the onSubmit function as a prop
-    />
+    <div>test</div>
   )
 }
 
-export default page
+export default test
