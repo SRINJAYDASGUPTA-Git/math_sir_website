@@ -44,13 +44,13 @@ const Navbar = ({ show }: NavbarProps) => {
       >
         <Image
           src={"/logo.svg"}
-          width={50}
+          width={40}
           height={200}
           alt="Logo"
           className="md:w-[60px]"
         />
         <span
-          className={`ms-2 text-black leading-[1.25rem] text-xl ${
+          className={`hidden md:block ms-2 text-black leading-[1.25rem] text-xl ${
             show
               ? "opacity-0 hidden"
               : "opacity-100 block transition-opacity ease-in-out duration-1000"

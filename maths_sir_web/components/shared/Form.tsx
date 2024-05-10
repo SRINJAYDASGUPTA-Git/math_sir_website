@@ -8,30 +8,32 @@ import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Input } from '../ui/input';
-import { addUsersToDB } from '@/utils';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import { Textarea } from '../ui/textarea';
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 interface FormProps{
-    type:'contact'|'onboarding';
-    onSubmit:({
+  type:'contact'|'onboarding';
+  onSubmit:({
         name,
         email,
         number,
         school,
         std,
         message
-    }:{
+      }:{
         name:string,
         email:string,
         number?:string,
         school?:string,
         std?:string,
         message?:string
-    })=>void;
-}
-const Form = ({type, onSubmit}:FormProps) => {
+      })=>void;
+    }
+    const Form = ({type, onSubmit}:FormProps) => {
     const { user } = useUser();
     const title = type === 'contact'?'Contact Us':'Tell us about Yourself'
     const subtitle = type === 'contact'?'We\'re here to listen! Drop us a message using the form below, and we\'ll be swift to reach out to you.':'Let\'s get to know you! Share a few details, and let\'s start your math journey together!'
@@ -151,7 +153,7 @@ const Form = ({type, onSubmit}:FormProps) => {
                       className="h-9 p-1 text-[#333] "
                     />
                     <CommandList>
-                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandEmpty>No Class found.</CommandEmpty>
                       <CommandGroup>
                         {classData.map((courseD) => (
                           <CommandItem
