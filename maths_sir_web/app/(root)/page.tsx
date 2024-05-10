@@ -31,6 +31,7 @@ export default function Home() {
   const router = useRouter();
   const [show, setShow] = useState(true);
   const { user } = useUser();
+  const [isAdmin, setisAdmin] = useState(false);
   const userEmail = user?.emailAddresses?.[0]?.emailAddress;
   const [courses_subed, setCourses_subed] = useState<string[] | null>(null);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -38,6 +39,9 @@ export default function Home() {
   useEffect(() => {
     const fetchUserCourses = async () => {
       if (userEmail) {
+        if (userEmail === process.env.NEXT_PUBLIC_ADMIN_EMAIL_ID) {
+          setisAdmin(true);
+        }
         const userCourses = await getUserCourses(userEmail);
         setCourses_subed(userCourses);
       }
@@ -218,59 +222,69 @@ export default function Home() {
           </section>
         </SignedOut>
         <SignedIn>
-          <section className="w-full h-fit bg-white pt-5 px-10">
-            <p className="p-7 text-4xl font-bold text-[#232323]">
-              Your Courses
-            </p>
-            <div className="w-full p-5 flex-center flex-wrap">
-              {courses_subed ? (courses_subed?.map((course_sub: string) =>
-                courseData.map((course) => {
-                  if (course.id === course_sub) {
+          {isAdmin ?
+            <section className="w-full h-fit bg-white pt-5 px-10">
+              <p className="p-7 text-4xl font-bold text-[#232323]">
+                Student Details
+              </p>
+            </section>
+            :
+            <>
+              <section className="w-full h-fit bg-white pt-5 px-10">
+                <p className="p-7 text-4xl font-bold text-[#232323]">
+                  Your Courses
+                </p>
+                <div className="w-full p-5 flex-center flex-wrap">
+                  {courses_subed ? (courses_subed?.map((course_sub: string) =>
+                    courseData.map((course) => {
+                      if (course.id === course_sub) {
+                        return (
+                          <div
+                            key={course.id}
+                            className="md:basis-1/2 lg:basis-1/4 flex place-items-end"
+                          >
+                            <CourseCard_subed {...course}>
+                              <span className="w-full h-full flex-center text-xl md:hidden">
+                                {course.title}
+                              </span>
+                            </CourseCard_subed>
+                          </div>
+                        );
+                      }
+                      return null //Return null for courses not found in both arrays
+                    })
+                  )) : (
+                    <div className="flex-center flex-col gap-3">
+                      <Image src={'/not-found.svg'} width={100} height={100} alt="No courses subbed" className="md:w-[400px] md:h-[400px]" />
+                      <span className="text-[16px] md:text-2xl">You have not enrolled in any course</span>
+                      <Button className="rounded-full bg-white text-black border border-black hover:bg-white p-2 text-sm md:text-lg" onClick={() => router.push('/courses')}> Explore Courses</Button>
+                    </div>
+                  )}
+                </div>
+              </section>
+
+              <section className="w-full h-fit bg-white px-10 pt-5">
+                <p className="p-7 text-4xl font-bold text-[#232323]">Courses</p>
+                <div className="w-full p-5 flex-center flex-wrap">
+                  {courseDataSignedIn.map((course) => {
+                    if (courses_subed?.includes(course.id)) return null; // Skip courses already subscribed
                     return (
                       <div
                         key={course.id}
                         className="md:basis-1/2 lg:basis-1/4 flex place-items-end"
                       >
-                        <CourseCard_subed {...course}>
-                          <span className="w-full h-full flex-center text-xl md:hidden">
-                            {course.title}
-                          </span>
-                        </CourseCard_subed>
+                        <CourseCardSignedIn {...course}>
+                          {/* <span className="w-full h-full flex-center text-xl md:hidden">
+                      {course.title}
+                    </span> */}
+                        </CourseCardSignedIn>
                       </div>
                     );
-                  }
-                  return null //Return null for courses not found in both arrays
-                })
-              )):(
-                <div className="flex-center flex-col gap-3">
-                  <Image src={'/not-found.svg'} width={100} height={100} alt="No courses subbed" className="md:w-[400px] md:h-[400px]" />
-                  <span className="text-[16px] md:text-2xl">You have not enrolled in any course</span>
-                  <Button className="rounded-full bg-white text-black border border-black hover:bg-white p-2 text-sm md:text-lg" onClick={()=> router.push('/courses')}> Explore Courses</Button>
+                  })}
                 </div>
-              )}
-            </div>
-          </section>
-
-          <section className="w-full h-fit bg-white px-10 pt-5">
-            <p className="p-7 text-4xl font-bold text-[#232323]">Courses</p>
-            <div className="w-full p-5 flex-center flex-wrap">
-              {courseDataSignedIn.map((course) => {
-                if(courses_subed?.includes(course.id)) return null; // Skip courses already subscribed
-                return (
-                  <div
-                    key={course.id}
-                    className="md:basis-1/2 lg:basis-1/4 flex place-items-end"
-                  >
-                    <CourseCardSignedIn {...course}>
-                      {/* <span className="w-full h-full flex-center text-xl md:hidden">
-                        {course.title}
-                      </span> */}
-                    </CourseCardSignedIn>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
+              </section>
+            </>
+          }
         </SignedIn>
 
         {/* Call to Action */}
