@@ -2,7 +2,7 @@ import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { app, db } from "../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
-export interface User {
+export type User= {
   name: string;
   email: string;
   phoneNumber: string;

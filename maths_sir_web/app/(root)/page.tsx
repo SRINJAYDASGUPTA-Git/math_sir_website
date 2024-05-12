@@ -36,7 +36,6 @@ export default function Home() {
   const userEmail = user?.emailAddresses?.[0]?.emailAddress;
   const [courses_subed, setCourses_subed] = useState<string[] | null>(null);
   const [lastScrollY, setLastScrollY] = useState(0);
-
   useEffect(() => {
     const fetchUserCourses = async () => {
       if (userEmail) {
@@ -208,7 +207,6 @@ export default function Home() {
           {isAdmin ? (
             <section className="w-full h-fit bg-white pt-5 px-10">
               {courseData.map((course) => {
-                console.log(course.id);
                 return <StudentDetails key={course.id} course={course.id} />;
               })}
             </section>
