@@ -13,10 +13,6 @@ export const navLinks = [
     href:'/courses',
     label:'Courses'
   },
-  {
-    href:'/dashboard',
-    label:'Dashboard'
-  }
 ];
 
 export const slideImage = [
@@ -152,18 +148,6 @@ export const courseDataSignedIn = [
     image:'/courses_auth/KVPY.png',
     description:"KVPY Mathematics offers a stimulating challenge for students seeking admission to premier science institutes in India. Stepping beyond the JEE Mains curriculum, KVPY explores a broader range of mathematical concepts, fostering a deeper understanding and appreciation for the subject. Calculus takes on a more theoretical approach, delving into topics like sequences and series, limits and continuity, and differentiation and integration with greater rigor.  Inequalities become a powerful tool for problem-solving, requiring sophisticated techniques to analyze and manipulate them. Combinatorics, the art of counting and arranging objects, introduces fascinating problems involving permutations, combinations, and generating functions.  Number theory delves into the properties of integers, exploring concepts like divisibility, prime factorization, and modular arithmetic. Linear algebra expands on your understanding of matrices, introducing concepts like vector spaces, eigenvalues and eigenvectors, and linear transformations.  Set theory, the foundation of modern mathematics, strengthens your logical thinking and problem-solving skills. Probability theory goes beyond basic distributions, exploring advanced concepts like conditional probability, expectation value, and generating functions.  Exposure to topics like complex analysis and real analysis may also be included, providing a glimpse into more advanced areas of mathematics. KVPY Mathematics isn't just about scoring well on the exam; it's about igniting your passion for the subject. By delving deeper into theoretical concepts and exploring diverse areas, you'll gain a deeper appreciation for the power and elegance of mathematics and develop a strong foundation for further exploration in scientific fields."
   },
-  {
-    id:'NEET',
-    title:'NEET',
-    image:'/courses_auth/NEET.png',
-    description:"KVPY Mathematics offers a stimulating challenge for students seeking admission to premier science institutes in India. Stepping beyond the JEE Mains curriculum, KVPY explores a broader range of mathematical concepts, fostering a deeper understanding and appreciation for the subject. Calculus takes on a more theoretical approach, delving into topics like sequences and series, limits and continuity, and differentiation and integration with greater rigor.  Inequalities become a powerful tool for problem-solving, requiring sophisticated techniques to analyze and manipulate them. Combinatorics, the art of counting and arranging objects, introduces fascinating problems involving permutations, combinations, and generating functions.  Number theory delves into the properties of integers, exploring concepts like divisibility, prime factorization, and modular arithmetic. Linear algebra expands on your understanding of matrices, introducing concepts like vector spaces, eigenvalues and eigenvectors, and linear transformations.  Set theory, the foundation of modern mathematics, strengthens your logical thinking and problem-solving skills. Probability theory goes beyond basic distributions, exploring advanced concepts like conditional probability, expectation value, and generating functions.  Exposure to topics like complex analysis and real analysis may also be included, providing a glimpse into more advanced areas of mathematics. KVPY Mathematics isn't just about scoring well on the exam; it's about igniting your passion for the subject. By delving deeper into theoretical concepts and exploring diverse areas, you'll gain a deeper appreciation for the power and elegance of mathematics and develop a strong foundation for further exploration in scientific fields."
-  },
-  {
-    id:'WBCS',
-    title:'WBCS',
-    image:'/courses_auth/WBCS.png',
-    description:"KVPY Mathematics offers a stimulating challenge for students seeking admission to premier science institutes in India. Stepping beyond the JEE Mains curriculum, KVPY explores a broader range of mathematical concepts, fostering a deeper understanding and appreciation for the subject. Calculus takes on a more theoretical approach, delving into topics like sequences and series, limits and continuity, and differentiation and integration with greater rigor.  Inequalities become a powerful tool for problem-solving, requiring sophisticated techniques to analyze and manipulate them. Combinatorics, the art of counting and arranging objects, introduces fascinating problems involving permutations, combinations, and generating functions.  Number theory delves into the properties of integers, exploring concepts like divisibility, prime factorization, and modular arithmetic. Linear algebra expands on your understanding of matrices, introducing concepts like vector spaces, eigenvalues and eigenvectors, and linear transformations.  Set theory, the foundation of modern mathematics, strengthens your logical thinking and problem-solving skills. Probability theory goes beyond basic distributions, exploring advanced concepts like conditional probability, expectation value, and generating functions.  Exposure to topics like complex analysis and real analysis may also be included, providing a glimpse into more advanced areas of mathematics. KVPY Mathematics isn't just about scoring well on the exam; it's about igniting your passion for the subject. By delving deeper into theoretical concepts and exploring diverse areas, you'll gain a deeper appreciation for the power and elegance of mathematics and develop a strong foundation for further exploration in scientific fields."
-  }
 ]
 
 export const onboardingFormSchema = z.object({

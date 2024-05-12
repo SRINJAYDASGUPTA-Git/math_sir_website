@@ -26,12 +26,13 @@ import CourseCard_subed from "@/components/shared/CourseCard_subed";
 import { getUserCourses } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import StudentDetails from "@/components/shared/StudentDetails";
 
 export default function Home() {
   const router = useRouter();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState<boolean>(true);
   const { user } = useUser();
-  const [isAdmin, setisAdmin] = useState(false);
+  const [isAdmin, setisAdmin] = useState<boolean>(false);
   const userEmail = user?.emailAddresses?.[0]?.emailAddress;
   const [courses_subed, setCourses_subed] = useState<string[] | null>(null);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -49,38 +50,20 @@ export default function Home() {
 
     fetchUserCourses();
   }, [userEmail]);
-  console.log(courses_subed)
-
+  
   const controlNavbar = useCallback(() => {
     const scrollThreshold = 300; // Define the scroll threshold here
     if (window.scrollY > scrollThreshold && window.scrollY > lastScrollY) {
-      // if scroll down beyond the threshold hide the navbar
       setShow(false);
     } else {
-      // if scroll up or not beyond the threshold show the navbar
       setShow(true);
     }
-    // remember current page location to use in the next move
     setLastScrollY(window.scrollY);
-
-    // if (typeof window !== "undefined") {
-    //   if (window.scrollY > lastScrollY) {
-    //     // if scroll down hide the navbar
-    //     setShow(false);
-    //   } else {
-    //     // if scroll up show the navbar
-    //     setShow(true);
-    //   }
-    //   // remember current page location to use in the next move
-    //   setLastScrollY(window.scrollY);
-    // }
   }, [lastScrollY]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", controlNavbar);
-
-      // cleanup function
       return () => {
         window.removeEventListener("scroll", controlNavbar);
       };
@@ -222,42 +205,59 @@ export default function Home() {
           </section>
         </SignedOut>
         <SignedIn>
-          {isAdmin ?
+          {isAdmin ? (
             <section className="w-full h-fit bg-white pt-5 px-10">
-              <p className="p-7 text-4xl font-bold text-[#232323]">
-                Student Details
-              </p>
+              {courseData.map((course) => {
+                console.log(course.id);
+                return <StudentDetails key={course.id} course={course.id} />;
+              })}
             </section>
-            :
+          ) : (
             <>
               <section className="w-full h-fit bg-white pt-5 px-10">
                 <p className="p-7 text-4xl font-bold text-[#232323]">
                   Your Courses
                 </p>
                 <div className="w-full p-5 flex-center flex-wrap">
-                  {courses_subed ? (courses_subed?.map((course_sub: string) =>
-                    courseData.map((course) => {
-                      if (course.id === course_sub) {
-                        return (
-                          <div
-                            key={course.id}
-                            className="md:basis-1/2 lg:basis-1/4 flex place-items-end"
-                          >
-                            <CourseCard_subed {...course}>
-                              <span className="w-full h-full flex-center text-xl md:hidden">
-                                {course.title}
-                              </span>
-                            </CourseCard_subed>
-                          </div>
-                        );
-                      }
-                      return null //Return null for courses not found in both arrays
-                    })
-                  )) : (
+                  {courses_subed ? (
+                    courses_subed?.map((course_sub: string) =>
+                      courseData.map((course) => {
+                        if (course.id === course_sub) {
+                          return (
+                            <div
+                              key={course.id}
+                              className="md:basis-1/2 lg:basis-1/4 flex place-items-end"
+                            >
+                              <CourseCard_subed {...course}>
+                                <span className="w-full h-full flex-center text-xl md:hidden">
+                                  {course.title}
+                                </span>
+                              </CourseCard_subed>
+                            </div>
+                          );
+                        }
+                        return null; //Return null for courses not found in both arrays
+                      })
+                    )
+                  ) : (
                     <div className="flex-center flex-col gap-3">
-                      <Image src={'/not-found.svg'} width={100} height={100} alt="No courses subbed" className="md:w-[400px] md:h-[400px]" />
-                      <span className="text-[16px] md:text-2xl">You have not enrolled in any course</span>
-                      <Button className="rounded-full bg-white text-black border border-black hover:bg-white p-2 text-sm md:text-lg" onClick={() => router.push('/courses')}> Explore Courses</Button>
+                      <Image
+                        src={"/not-found.svg"}
+                        width={100}
+                        height={100}
+                        alt="No courses subbed"
+                        className="md:w-[400px] md:h-[400px]"
+                      />
+                      <span className="text-[16px] md:text-2xl">
+                        You have not enrolled in any course
+                      </span>
+                      <Button
+                        className="rounded-full bg-white text-black border border-black hover:bg-white p-2 text-sm md:text-lg"
+                        onClick={() => router.push("/courses")}
+                      >
+                        {" "}
+                        Explore Courses
+                      </Button>
                     </div>
                   )}
                 </div>
@@ -273,18 +273,14 @@ export default function Home() {
                         key={course.id}
                         className="md:basis-1/2 lg:basis-1/4 flex place-items-end"
                       >
-                        <CourseCardSignedIn {...course}>
-                          {/* <span className="w-full h-full flex-center text-xl md:hidden">
-                      {course.title}
-                    </span> */}
-                        </CourseCardSignedIn>
+                        <CourseCardSignedIn {...course} />
                       </div>
                     );
                   })}
                 </div>
               </section>
             </>
-          }
+          )}
         </SignedIn>
 
         {/* Call to Action */}
