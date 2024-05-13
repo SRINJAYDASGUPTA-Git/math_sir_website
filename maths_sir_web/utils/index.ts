@@ -1,13 +1,8 @@
-import {
-  arrayUnion,
-  doc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { app, db } from "../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
-interface User {
+export type User= {
   name: string;
   email: string;
   phoneNumber: string;
@@ -28,8 +23,7 @@ export const addUsersToDB = async (user: User) => {
   console.log("Document written with ID: ", user.email);
 };
 
-
-export const addCourseToUser = async (userEmail:string, course:string) => {
+export const addCourseToUser = async (userEmail: string, course: string) => {
   try {
     const userRef = doc(db, "users", userEmail);
     await updateDoc(userRef, {
@@ -41,7 +35,9 @@ export const addCourseToUser = async (userEmail:string, course:string) => {
   }
 };
 
-export const getUserCourses = async (userEmail: string): Promise<string[] | null> => {
+export const getUserCourses = async (
+  userEmail: string
+): Promise<string[] | null> => {
   try {
     const q = query(collection(db, "users"), where("email", "==", userEmail));
     const querySnapshot = await getDocs(q);
@@ -62,4 +58,34 @@ export const getUserCourses = async (userEmail: string): Promise<string[] | null
     console.error("Error retrieving user courses:", error);
     return null;
   }
+};
+
+export const getUsersFromCourse = async (
+  course: string
+): Promise<User[] | null> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const q = query(
+        collection(db, "users"),
+        where("courses", "array-contains", course)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        console.log("No matching documents.");
+        resolve(null);
+      }
+
+      let users: User[] = [];
+
+      querySnapshot.forEach((doc) => {
+        users.push(doc.data() as User);
+      });
+
+      resolve(users);
+    } catch (error) {
+      console.error("Error retrieving users from course:", error);
+      reject(null);
+    }
+  });
 };
