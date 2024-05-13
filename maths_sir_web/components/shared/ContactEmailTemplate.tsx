@@ -13,9 +13,8 @@ import {
     Text,
   } from "@react-email/components";
   import * as React from "react";
-import Footer from "./Footer";
   
-  interface ReviewEmailProps {
+  interface AirbnbReviewEmailProps {
     authorName?: string;
     authorImage?: string;
     reviewText?: string;
@@ -25,11 +24,11 @@ import Footer from "./Footer";
     ? `https://${process.env.VERCEL_URL}`
     : "";
   
-  export const ReviewEmail = ({
+  export const ContactEmailTemplate = ({
     authorName,
     authorImage,
     reviewText,
-  }: ReviewEmailProps) => {
+  }: AirbnbReviewEmailProps) => {
     const previewText = `Read ${authorName}'s review`;
   
     return (
@@ -44,7 +43,7 @@ import Footer from "./Footer";
                 src={`${baseUrl}/logo.png`}
                 width="96"
                 height="30"
-                alt="BoM"
+                alt="Because of Maths"
               />
             </Section>
             <Section>
@@ -62,14 +61,15 @@ import Footer from "./Footer";
                 <Text style={review}>{reviewText}</Text>
               </Row>
             </Section>
-            <Footer />
+  
+            <Hr style={hr} />
           </Container>
         </Body>
       </Html>
     );
   };
   
-  export default ReviewEmail;
+  export default ContactEmailTemplate;
   
   const main = {
     backgroundColor: "#ffffff",
@@ -109,3 +109,41 @@ import Footer from "./Footer";
     backgroundColor: "#f2f3f3",
     borderRadius: "4px",
   };
+
+  const hr = {
+    borderColor: "#cccccc",
+    margin: "20px 0",
+  };
+  
+  
+//   const button = {
+//     backgroundColor: "#ff5a5f",
+//     borderRadius: "3px",
+//     color: "#fff",
+//     fontSize: "18px",
+//     paddingTop: "19px",
+//     paddingBottom: "19px",
+//     textDecoration: "none",
+//     textAlign: "center" as const,
+//     display: "block",
+//     width: "100%",
+//   };
+  
+//   const link = {
+//     ...paragraph,
+//     color: "#ff5a5f",
+//     display: "block",
+//   };
+  
+//   const reportLink = {
+//     fontSize: "14px",
+//     color: "#9ca299",
+//     textDecoration: "underline",
+//   };
+  
+  
+//   const footer = {
+//     color: "#9ca299",
+//     fontSize: "14px",
+//     marginBottom: "10px",
+//   };
