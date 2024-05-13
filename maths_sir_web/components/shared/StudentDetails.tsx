@@ -1,16 +1,6 @@
 'use client';
 import { User, getUsersFromCourse } from "@/utils";
 import { courseData } from "@/constants";
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
 import { useEffect, useState } from "react";
 import DataTable from "./DataTable";
 const fetchStudents = async (courseId: string) => {
@@ -19,7 +9,7 @@ const fetchStudents = async (courseId: string) => {
       return users;
     } catch (error) {
       console.error('Error fetching students:', error);
-      return null; // Or handle the error differently
+      return null; 
     }
   };
 const StudentDetails = ({course}:{course:string}) => {
@@ -37,12 +27,14 @@ const StudentDetails = ({course}:{course:string}) => {
 
     fetchData();
   }, [course]);
+
+  if(isLoading) return <p>Loading...</p>;
   return (
     <>
       <section className="w-full flex flex-col gap-4 p-5">
         <div className="p-5 bg-[#f5f5f5] rounded-xl shadow-md">
           <h1 className="text-xl md:text-4xl underline">Students of {courseHead}</h1>
-            <DataTable data={students || []} />
+            <DataTable data={students!} />
         </div>
       </section>
     </>
