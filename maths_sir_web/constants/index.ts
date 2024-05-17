@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { date, z } from "zod";
 
 export const navLinks = [
   {
-    href: "/blog",
-    label: "Blog",
+    href: "/note",
+    label: "Note",
   },
   {
     href: "/contact",
@@ -28,22 +28,14 @@ export const slideImage = [
 ]
 
 export const classData = [
-  {
-    id:'ix',
-    title:'Class IX',
-  },
-  {
-    id:'x',
-    title:'Class X',
-  },
-  {
-    id:'xi',
-    title:'Class XI',
-  },
-  {
-    id:'xii',
-    title:'Class XII',
-  }
+    { id: 'ix(cbse)', title: 'Class IX (CBSE)' },
+    { id: 'ix(icse)', title: 'Class IX (ICSE)' },
+    { id: 'x(cbse)', title: 'Class X (CBSE)' },
+    { id: 'x(icse)', title: 'Class X (ICSE)' },
+    { id: 'xi(cbse)', title: 'Class XI (CBSE)' },
+    { id: 'xi(icse)', title: 'Class XI (ICSE)' },
+    { id: 'xii(cbse)', title: 'Class XII (CBSE)' },
+    { id: 'xii(icse)', title: 'Class XII (ICSE)' }
 ]
 
 export const courseData = [
@@ -169,6 +161,9 @@ export const onboardingFormSchema = z.object({
 })
 
 export const contactFormSchema = z.object({
+  std: z.string({
+    required_error: "Please select a Class.",
+  }),
   fullName: z.string().min(1, {
     message: "Please enter your first name.",
   }),
@@ -182,4 +177,21 @@ export const contactFormSchema = z.object({
   }).max(500, {
     message: "Message must be at most 500 characters.",
   })
+})
+
+export const examFormSchema = z.object({
+  exname: z.string().min(3, {
+    message: "Please enter a exam name.",
+  }),
+  date: z.string().min(3,{
+    message: "Please enter a valid date",
+  }),
+  desc: z.string().min(10, {
+    message: "Message must be at least 10 characters.",
+  }).max(500, {
+    message: "Message must be at most 500 characters.",
+  }),
+  totalmarks: z.string().min(0,{
+    message: "Please enter a valid full marks",
+  }),
 })

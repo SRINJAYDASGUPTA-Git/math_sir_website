@@ -19,14 +19,16 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import Autoplay from "embla-carousel-autoplay";
-import { courseData, courseDataSignedIn, slideImage } from "@/constants";
+import { courseData, courseDataSignedIn, examFormSchema, slideImage } from "@/constants";
 import CourseCard from "@/components/shared/CourseCard";
 import CourseCardSignedIn from "@/components/shared/CourseCardSignedIn";
 import CourseCard_subed from "@/components/shared/CourseCard_subed";
-import { getUserCourses } from "@/utils";
+import { addUsersToDB, getUserCourses } from "@/utils";
 import { Button } from "@/components/ui/button";
+import Form from "@/components/shared/Form";
 import { useRouter } from "next/navigation";
 import StudentDetails from "@/components/shared/StudentDetails";
+import { z } from "zod";
 
 export default function Home() {
   const router = useRouter();
@@ -49,7 +51,7 @@ export default function Home() {
 
     fetchUserCourses();
   }, [userEmail]);
-  
+
   const controlNavbar = useCallback(() => {
     const scrollThreshold = 300; // Define the scroll threshold here
     if (window.scrollY > scrollThreshold && window.scrollY > lastScrollY) {
@@ -59,6 +61,18 @@ export default function Home() {
     }
     setLastScrollY(window.scrollY);
   }, [lastScrollY]);
+
+   function onSubmit(values: z.infer<typeof examFormSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    if (userEmail) {
+      
+      router.push("/");
+    }
+    else{
+      alert("No Internet!");
+    };
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -205,13 +219,51 @@ export default function Home() {
         </SignedOut>
         <SignedIn>
           {isAdmin ? (
-            <section className="w-full h-fit bg-white pt-5 px-10">
-              {courseData.map((course) => {
-                return <StudentDetails key={course.id} course={course.id} />;
-              })}
+            <section>
+              <div className="w-full h-fit bg-white pt-5 px-10">
+                <Form type={"exam"} onSubmit={function ({ std, exname, date, desc, totalmarks}: {std?: string | undefined; exname?: string | undefined; date?: string | undefined; desc?: string | undefined; totalmarks?: string | undefined; }): void {
+                  throw new Error("Function not implemented.");
+                } }/>
+              </div>
+              <div className="w-full h-fit bg-white pt-5 px-10">
+                {courseData.map((course) => {
+                  return <StudentDetails key={course.id} course={course.id} />;
+                })}
+              </div>
             </section>
           ) : (
             <>
+              <section className="w-full h-fit bg-white pt-5 px-10">
+                <p className="p-7 text-4xl font-bold text-[#232323]">
+                  Upcoming Exams
+                </p>
+                <div className="w-full p-5 flex-center flex-wrap">
+                  {courses_subed ? (
+                    <div></div>
+                  ) : (
+                    <div className="flex-center flex-col gap-3">
+                      <Image
+                        src={"/not-found.svg"}
+                        width={100}
+                        height={100}
+                        alt="No courses subbed"
+                        className="md:w-[400px] md:h-[400px]"
+                      />
+                      <span className="text-[16px] md:text-2xl">
+                        You have not enrolled in any course
+                      </span>
+                      <Button
+                        className="rounded-full bg-white text-black border border-black hover:bg-white p-2 text-sm md:text-lg"
+                        onClick={() => router.push("/courses")}
+                      >
+                        {" "}
+                        Explore Courses
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </section>
+
               <section className="w-full h-fit bg-white pt-5 px-10">
                 <p className="p-7 text-4xl font-bold text-[#232323]">
                   Your Courses
@@ -219,7 +271,7 @@ export default function Home() {
                 <div className="w-full p-5 flex-center flex-wrap">
                   {courses_subed ? (
                     courses_subed?.map((course_sub: string) =>
-                      courseData.map((course) => {
+                      courseDataSignedIn.map((course) => {
                         if (course.id === course_sub) {
                           return (
                             <div
@@ -265,7 +317,6 @@ export default function Home() {
                 <p className="p-7 text-4xl font-bold text-[#232323]">Courses</p>
                 <div className="w-full p-5 flex-center flex-wrap">
                   {courseDataSignedIn.map((course) => {
-                    if (courses_subed?.includes(course.id)) return null; // Skip courses already subscribed
                     return (
                       <div
                         key={course.id}
