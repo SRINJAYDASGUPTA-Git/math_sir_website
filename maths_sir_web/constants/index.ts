@@ -1,4 +1,4 @@
-import { date, z } from "zod";
+import { z } from "zod";
 
 export const navLinks = [
   {
@@ -13,6 +13,10 @@ export const navLinks = [
     href:'/courses',
     label:'Courses'
   },
+  {
+    href:'/exams',
+    label:'Exams'
+  }
 ];
 
 export const slideImage = [
@@ -183,15 +187,18 @@ export const examFormSchema = z.object({
   exname: z.string().min(3, {
     message: "Please enter a exam name.",
   }),
-  date: z.string().min(3,{
-    message: "Please enter a valid date",
+  std: z.string().min(1,{
+    message: "Please select a Class.",
+  }),
+  date: z.date().min(new Date(), {
+    message: "Please enter a valid date.",
   }),
   desc: z.string().min(10, {
     message: "Message must be at least 10 characters.",
   }).max(500, {
     message: "Message must be at most 500 characters.",
   }),
-  totalmarks: z.string().min(0,{
-    message: "Please enter a valid full marks",
-  }),
+  totalmarks: z.string().min(1, {
+    message: "Please enter a valid marks.",
+  })
 })

@@ -224,7 +224,7 @@ const Onboarding = () => {
                 <Button type="submit" className="rounded-xl">Continue</Button>
               </form>
             </Form>
-          </div>
+          
           {/* Image */}
           <section className="hidden w-[55%] md:block">
             <Image

@@ -8,6 +8,7 @@ export type User= {
   phoneNumber: string;
   school: string;
   courses: string[];
+  exams: string[];
   class: string;
 }
 
@@ -18,6 +19,7 @@ export const addUsersToDB = async (user: User) => {
     phoneNumber: user.phoneNumber,
     school: user.school,
     courses: user.courses,
+    exams: user.exams,
     class: user.class,
   });
   console.log("Document written with ID: ", user.email);

@@ -25,7 +25,7 @@ import CourseCardSignedIn from "@/components/shared/CourseCardSignedIn";
 import CourseCard_subed from "@/components/shared/CourseCard_subed";
 import { addUsersToDB, getUserCourses } from "@/utils";
 import { Button } from "@/components/ui/button";
-import Form from "@/components/shared/Form";
+import ExamForm from "@/components/shared/ExamForm";
 import { useRouter } from "next/navigation";
 import StudentDetails from "@/components/shared/StudentDetails";
 import { z } from "zod";
@@ -219,12 +219,7 @@ export default function Home() {
         </SignedOut>
         <SignedIn>
           {isAdmin ? (
-            <section>
-              <div className="w-full h-fit bg-white pt-5 px-10">
-                <Form type={"exam"} onSubmit={function ({ std, exname, date, desc, totalmarks}: {std?: string | undefined; exname?: string | undefined; date?: string | undefined; desc?: string | undefined; totalmarks?: string | undefined; }): void {
-                  throw new Error("Function not implemented.");
-                } }/>
-              </div>
+            <section className="w-full">
               <div className="w-full h-fit bg-white pt-5 px-10">
                 {courseData.map((course) => {
                   return <StudentDetails key={course.id} course={course.id} />;
