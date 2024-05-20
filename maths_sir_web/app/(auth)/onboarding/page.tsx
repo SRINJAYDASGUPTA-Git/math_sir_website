@@ -69,7 +69,7 @@ const Onboarding = () => {
 
       router.push("/");
     }
-    else{
+    else {
       alert("No Internet!");
     };
   }
@@ -224,17 +224,16 @@ const Onboarding = () => {
                 <Button type="submit" className="rounded-xl">Continue</Button>
               </form>
             </Form>
-          
-          {/* Image */}
+          </div>
           <section className="hidden w-[55%] md:block">
-            <Image
-              src="/onboarding-img.png"
-              alt="Onboarding"
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="w-full h-ful mt-3 rounded-xl" />
-          </section>
+              <Image
+                src="/onboarding-img.png"
+                alt="Onboarding"
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="w-full h-ful mt-3 rounded-xl" />
+            </section>
         </div>
       </div>
     </section>

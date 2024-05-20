@@ -1,4 +1,4 @@
-import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc, addDoc } from "firebase/firestore";
 import { app, db } from "../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
@@ -11,6 +11,15 @@ export type User= {
   exams: string[];
   class: string;
 }
+
+export type Exam = {
+  examName: string;
+  standardClass: string;
+  description: string;
+  totalMarks: number;
+  date: any;
+};
+
 
 export const addUsersToDB = async (user: User) => {
   await setDoc(doc(db, "users", user.email), {
@@ -90,4 +99,52 @@ export const getUsersFromCourse = async (
       reject(null);
     }
   });
+};
+
+export const addExamToDB = async (exam: Exam) => {
+  try {
+    const examRef = await addDoc(collection(db, "exams"), {
+      examName: exam.examName,
+      standardClass: exam.standardClass,
+      description: exam.description,
+      totalMarks: exam.totalMarks,
+      date: exam.date,
+    });
+    console.log("Exam added with ID: ", examRef.id);
+  } catch (error) {
+    console.error("Error adding exam: ", error);
+  }
+};
+
+export const getExamsByClass = async (standardClass: string): Promise<Exam[] | null> => {
+  try {
+    const q = query(
+      collection(db, "exams"),
+      where("standardClass", "==", standardClass)
+    );
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.log("No matching exams.");
+      return null;
+    }
+
+    const exams: Exam[] = [];
+
+    querySnapshot.forEach((doc) => {
+      const examData = doc.data();
+      exams.push({
+        examName: examData.examName,
+        standardClass: examData.standardClass,
+        description: examData.description,
+        totalMarks: examData.totalMarks,
+        date: examData.date,
+      });
+    });
+
+    return exams;
+  } catch (error) {
+    console.error("Error retrieving exams by class:", error);
+    return null;
+  }
 };

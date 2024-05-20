@@ -19,16 +19,14 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import Autoplay from "embla-carousel-autoplay";
-import { courseData, courseDataSignedIn, examFormSchema, slideImage } from "@/constants";
+import { courseData, courseDataSignedIn, slideImage } from "@/constants";
 import CourseCard from "@/components/shared/CourseCard";
 import CourseCardSignedIn from "@/components/shared/CourseCardSignedIn";
 import CourseCard_subed from "@/components/shared/CourseCard_subed";
 import { addUsersToDB, getUserCourses } from "@/utils";
 import { Button } from "@/components/ui/button";
-import ExamForm from "@/components/shared/ExamForm";
 import { useRouter } from "next/navigation";
 import StudentDetails from "@/components/shared/StudentDetails";
-import { z } from "zod";
 
 export default function Home() {
   const router = useRouter();
@@ -61,18 +59,6 @@ export default function Home() {
     }
     setLastScrollY(window.scrollY);
   }, [lastScrollY]);
-
-   function onSubmit(values: z.infer<typeof examFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    if (userEmail) {
-      
-      router.push("/");
-    }
-    else{
-      alert("No Internet!");
-    };
-  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {

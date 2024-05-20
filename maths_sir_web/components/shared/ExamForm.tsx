@@ -11,6 +11,8 @@ import {
   CommandItem,
   CommandList,
 } from "../ui/command";
+import type { Exam } from "@/utils";
+import { addExamToDB } from "@/utils";
 import { classData, examFormSchema } from "@/constants";
 import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -32,7 +34,6 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Calendar } from "../ui/calendar";
-import Navbar from "./Navbar";
 
 const ExamForm = () => {
   const form = useForm<z.infer<typeof examFormSchema>>({
@@ -49,13 +50,34 @@ const ExamForm = () => {
   const subtitle = "Enter the details to shedule an upcoming exam";
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
+  const [isAdmin, setisAdmin] = useState<boolean>(false);
+  const userEmail = user?.emailAddresses?.[0]?.emailAddress;
 
-  function onSubmit(values: z.infer<typeof examFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-    router.push("/");
-  }
+  const onSubmit = (values: z.infer<typeof examFormSchema>) => {
+    // Transform form values to match the Exam type
+    const examDetails: Exam = {
+      examName: values.exname,
+      standardClass: values.std,
+      description: values.desc,
+      totalMarks: parseInt(values.totalmarks),
+      date: values.date,
+    };
+
+    // Add exam to database
+    addExamToDB(examDetails)
+      .then(() => {
+        // Check for userEmail and handle routing
+        if (userEmail) {
+          router.push("/exams");
+        } else {
+          alert("No Internet!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding exam:", error);
+      });
+  };
+
 
   if (!user) return <div>Loading...</div>;
   return (
@@ -79,7 +101,7 @@ const ExamForm = () => {
                   name="exname"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel>Exam name</FormLabel>
                       <FormControl>
                         <Input placeholder="Test 1" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0" />
                       </FormControl>
@@ -108,8 +130,8 @@ const ExamForm = () => {
                             >
                               {field.value
                                 ? classData.find(
-                                    (classD) => classD.title === field.value
-                                  )?.title
+                                  (classD) => classD.title === field.value
+                                )?.title
                                 : "Select Class"}
                               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
@@ -216,7 +238,7 @@ const ExamForm = () => {
                     <FormItem>
                       <FormLabel>Total Marks</FormLabel>
                       <FormControl>
-                        <Input  {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"  />
+                        <Input  {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
