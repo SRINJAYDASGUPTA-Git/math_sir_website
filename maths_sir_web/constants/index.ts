@@ -36,10 +36,8 @@ export const classData = [
     { id: 'ix(icse)', title: 'Class IX (ICSE)' },
     { id: 'x(cbse)', title: 'Class X (CBSE)' },
     { id: 'x(icse)', title: 'Class X (ICSE)' },
-    { id: 'xi(cbse)', title: 'Class XI (CBSE)' },
-    { id: 'xi(icse)', title: 'Class XI (ICSE)' },
-    { id: 'xii(cbse)', title: 'Class XII (CBSE)' },
-    { id: 'xii(icse)', title: 'Class XII (ICSE)' }
+    { id: 'xi', title: 'Class XI' },
+    { id: 'xii', title: 'Class XII' },
 ]
 
 export const courseData = [

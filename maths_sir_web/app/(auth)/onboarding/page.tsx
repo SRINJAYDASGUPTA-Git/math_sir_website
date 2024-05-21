@@ -52,27 +52,45 @@ const Onboarding = () => {
       school: "",
     },
   });
-
-  function onSubmit(values: z.infer<typeof onboardingFormSchema>) {
+  const [loading, setLoading] = useState<boolean>(false)
+  async function onSubmit(values: z.infer<typeof onboardingFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    if (userEmail) {
+    if (user) {
       addUsersToDB({
         name: values.fullName,
-        email: userEmail,
+        email: userEmail || "",
         phoneNumber: values.phoneNumber,
         school: values.school,
         courses: [],
         exams: [],
         class: values.std,
       });
-
+      const metadata = {userId:user?.id, courses:[]}
+      try {
+        setLoading(true);
+        const response = await fetch('/api/publicMeta', {
+          method: 'POST',
+          headers:{
+            "Content-Type":"application/json",
+          },
+          body:JSON.stringify(metadata)
+        })
+  
+        if(response) console.log(response)
+        
+      } catch (error:any) {
+          throw new Error(error)
+      } finally {
+        setLoading(false);
+      }
       router.push("/");
     }
     else {
       alert("No Internet!");
     };
   }
+
   return (
     <section>
       <div className="pointer-events-none">

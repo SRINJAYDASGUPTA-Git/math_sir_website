@@ -47,8 +47,9 @@ export default function Home() {
       }
     };
 
+    console.log(user?.publicMetadata)
     fetchUserCourses();
-  }, [userEmail]);
+  }, [user]);
 
   const controlNavbar = useCallback(() => {
     const scrollThreshold = 300; // Define the scroll threshold here
@@ -68,7 +69,6 @@ export default function Home() {
       };
     }
   }, [controlNavbar]);
-
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: false })
   );
