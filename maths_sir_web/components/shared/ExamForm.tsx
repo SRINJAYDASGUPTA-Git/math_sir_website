@@ -13,7 +13,7 @@ import {
 } from "../ui/command";
 import type { Exam } from "@/utils";
 import { addExamToDB } from "@/utils";
-import { classData, examFormSchema } from "@/constants";
+import { classData, courseData, examFormSchema } from "@/constants";
 import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -34,6 +34,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Calendar } from "../ui/calendar";
+import { Timestamp } from "firebase/firestore";
 
 const ExamForm = () => {
   const form = useForm<z.infer<typeof examFormSchema>>({
@@ -55,12 +56,12 @@ const ExamForm = () => {
 
   const onSubmit = (values: z.infer<typeof examFormSchema>) => {
     // Transform form values to match the Exam type
-    const examDetails: Exam = {
+    const examDetails = {
       examName: values.exname,
       standardClass: values.std,
       description: values.desc,
       totalMarks: parseInt(values.totalmarks),
-      date: values.date,
+      date: Timestamp.fromDate(values.date),
     };
 
     // Add exam to database
@@ -115,7 +116,7 @@ const ExamForm = () => {
                   name="std"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Class</FormLabel>
+                      <FormLabel>Course</FormLabel>
                       <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -129,10 +130,10 @@ const ExamForm = () => {
                               )}
                             >
                               {field.value
-                                ? classData.find(
-                                  (classD) => classD.title === field.value
+                                ? courseData.find(
+                                  (course) => course.title === field.value
                                 )?.title
-                                : "Select Class"}
+                                : "Select Course"}
                               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -144,14 +145,14 @@ const ExamForm = () => {
                               className="h-9 p-1 text-[#333] "
                             />
                             <CommandList>
-                              <CommandEmpty>No framework found.</CommandEmpty>
+                              <CommandEmpty>No Course found.</CommandEmpty>
                               <CommandGroup>
-                                {classData.map((classD) => (
+                                {courseData.map((classD) => (
                                   <CommandItem
                                     value={classD.title}
                                     key={classD.id}
                                     onSelect={() => {
-                                      form.setValue("std", classD.title);
+                                      form.setValue("std", classD.id);
                                     }}
                                   >
                                     {classD.title}

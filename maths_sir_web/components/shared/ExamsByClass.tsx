@@ -27,7 +27,7 @@ const ExamsByClass: React.FC<ExamsByClassProps> = ({ standardClass }) => {
   if (!exams) {
     return <div>No exams found for class {standardClass}</div>;
   }
-
+  console.log(exams)
   return (
     <div className="bg-white border border-black p-5 w-fit m-5">
         {exams.map((exam, index) => (
@@ -35,7 +35,7 @@ const ExamsByClass: React.FC<ExamsByClassProps> = ({ standardClass }) => {
             <h3>Exam Name: {exam.examName}</h3>
             <p>Description: {exam.description}</p>
             <p>Total Marks: {exam.totalMarks}</p>
-            <p>Date: {new Date(exam.date).toLocaleDateString()}</p>
+            <p>Date: {exam.date.toDate().toLocaleDateString()}</p>
           </div>
         ))}
     </div>

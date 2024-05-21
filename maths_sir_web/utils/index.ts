@@ -1,4 +1,4 @@
-import { arrayUnion, doc, setDoc, updateDoc, addDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc, addDoc, Timestamp } from "firebase/firestore";
 import { app, db } from "../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
@@ -17,7 +17,7 @@ export type Exam = {
   standardClass: string;
   description: string;
   totalMarks: number;
-  date: any;
+  date: Timestamp;
 };
 
 
