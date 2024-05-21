@@ -1,6 +1,6 @@
 import { arrayUnion, doc, setDoc, updateDoc, addDoc, Timestamp } from "firebase/firestore";
 import { app, db } from "../firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
 
 export type User= {
   name: string;
@@ -13,6 +13,7 @@ export type User= {
 }
 
 export type Exam = {
+  class: string;
   examName: string;
   standardClass: string;
   description: string;
@@ -116,35 +117,170 @@ export const addExamToDB = async (exam: Exam) => {
   }
 };
 
-export const getExamsByClass = async (standardClass: string): Promise<Exam[] | null> => {
+export const getUsersForExam = async (standardClass: string, examId: string): Promise<{ email: string; name: string; examId: string | null; marks: string | null }[] | null> => {
   try {
+    // 1. Find Users Enrolled in the Class
     const q = query(
-      collection(db, "exams"),
-      where("standardClass", "==", standardClass)
+      collection(db, "users"),
+      where("courses", "array-contains", standardClass)
     );
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      console.log("No matching exams.");
+      console.log("No users enrolled in the class.");
       return null;
     }
 
-    const exams: Exam[] = [];
+    const users: { email: string; name: string; examId: string | null; marks: string | null }[] = [];
 
     querySnapshot.forEach((doc) => {
-      const examData = doc.data();
-      exams.push({
-        examName: examData.examName,
-        standardClass: examData.standardClass,
-        description: examData.description,
-        totalMarks: examData.totalMarks,
-        date: examData.date,
+      const userData = doc.data() as User;
+
+      // 2. Extract Exam ID and Marks (modify to match your schema)
+      const userExams = userData.exams || []; // Handle cases where exams might not exist
+
+      let matchingExam: { examId: string; marks: string | null } | undefined; // Use undefined for potential absence
+
+      userExams.forEach((exam) => {
+        const parts = exam.split(","); // Split exam string (modify if separator is different)
+        if (parts.length >= 1 && parts[0] === examId) {
+          matchingExam = {
+            examId: parts[0],
+            marks: parts[1] || null, // Handle cases where marks might be missing
+          };
+          // Exit loop after finding a match (assuming only one match)
+          return;
+        }
+      });
+
+      users.push({
+        email: userData.email,
+        name: userData.name,
+        examId: matchingExam?.examId || null, // Use optional chaining for examId
+        marks: matchingExam?.marks || null, // Use optional chaining for marks
       });
     });
 
-    return exams;
+    return users;
   } catch (error) {
-    console.error("Error retrieving exams by class:", error);
+    console.error("Error retrieving users for class:", error);
+    return null;
+  }
+};
+//Demo Function Call
+// const usersForClass = await getUsersForClass(standardClass, examId);
+
+// if (usersForClass) {
+//   console.log("Users and their Exam Results:");
+//   usersForClass.forEach((user) => {
+//     console.log(`  - User: ${user.email} - Name: ${user.name}`);
+//     if (user.examId) { // Check if examId exists before printing
+//       console.log(`      Exam ID: ${user.examId}, Marks: ${user.marks}`);
+//     } else {
+//       console.log("      No result found for this exam.");
+//     }
+//   });
+// } 
+
+
+export const addExamMarksToUser = async (email: string, examId: string, marks: string): Promise<boolean> => {
+  try {
+    // 1. Find the User Document
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.error("User not found:", email);
+      return false;
+    }
+
+    // 2. Update User's Exam Array (modify to match your schema)
+    const userRef = querySnapshot.docs[0].ref; // Get reference to the first user (assuming unique email)
+    const userData = querySnapshot.docs[0].data() as User;
+    const userExams = userData.exams || []; // Handle cases where exams might not exist
+
+    userExams.push(`${examId},${marks}`); // Add exam ID and marks as comma-separated string
+
+    await updateDoc(userRef, {
+      exams: userExams,
+    });
+
+    console.log("Exam added successfully for user:", email);
+    return true;
+  } catch (error) {
+    console.error("Error adding exam to user:", error);
+    return false;
+  }
+};
+
+
+export const getExamSchedule = async (date: Date): Promise<{ upcomingExams: Exam[]; pastExams: Exam[] } | null> => {
+  try {
+    // 1. Get All Exams from Firestore (modify to match your schema)
+    const exams = await getDocs(collection(db, "exams"));
+
+    if (exams.empty) {
+      console.log("No exams found in the database.");
+      return null;
+    }
+
+    const upcomingExams: Exam[] = [];
+    const pastExams: Exam[] = [];
+
+    exams.forEach((doc) => {
+      const examData = doc.data() as Exam; // Assuming your exam data structure
+
+      // 2. Parse Exam Date (modify to match your date format)
+      const examDate = new Date(examData.date.toDate()); // Replace 'date' with your actual date field
+
+      // 3. Compare Dates (consider time zones if needed)
+      if (examDate > date) {
+        upcomingExams.push(examData);
+      } else {
+        pastExams.push(examData);
+      }
+    });
+
+    return { upcomingExams, pastExams };
+  } catch (error) {
+    console.error("Error retrieving exams:", error);
+    return null;
+  }
+};
+
+
+export const getExamScheduleByClass = async (classStandards: string[], date: Date): Promise<{ upcomingExams: Exam[]; pastExams: Exam[] } | null> => {
+  try {
+    // 1. Get All Exams from Firestore (modify to match your schema)
+    const exams = await getDocs(collection(db, "exams"));
+
+    if (exams.empty) {
+      console.log("No exams found in the database.");
+      return null;
+    }
+
+    const upcomingExams: Exam[] = [];
+    const pastExams: Exam[] = [];
+
+    exams.forEach((doc) => {
+      const examData = doc.data() as Exam; // Assuming your exam data structure
+
+      // 2. Parse Exam Date (modify to match your date format)
+      const examDate = new Date(examData.date.toDate()); // Replace 'date' with your actual date field
+
+      // 3. Check Class Standard and Compare Dates
+      if (classStandards.some((standardClass) => examData.class === standardClass)) {
+        if (examDate > date) {
+          upcomingExams.push(examData);
+        } else {
+          pastExams.push(examData);
+        }
+      }
+    });
+
+    return { upcomingExams, pastExams };
+  } catch (error) {
+    console.error("Error retrieving exams:", error);
     return null;
   }
 };
