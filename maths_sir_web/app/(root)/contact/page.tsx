@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { contactFormSchema } from "@/constants";
 import { useUser } from "@clerk/nextjs";
+import Navbar from "@/components/shared/Navbar";
 
 interface Content {
   authorName: string;
@@ -80,7 +81,9 @@ const Contact = () => {
     router.push("/");
   }
   return (
-    <div className="w-full flex-center">
+    <>
+    <Navbar show={false} />
+    <div className="w-full flex-center mt-4">
       <div className="w-[95%] md:w-[90%] flex-between bg-[#FEF5EA] rounded-xl">
         {/* Onboarding Form */}
         <Form {...form}>
@@ -158,6 +161,7 @@ const Contact = () => {
         </section>
       </div>
     </div>
+    </>
   );
 };
 

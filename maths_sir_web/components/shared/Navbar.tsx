@@ -9,27 +9,23 @@ import {
 } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { Menu } from "lucide-react";
 interface NavbarProps {
   show: boolean;
-}
-
-const DotIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
-      fill="currentColor"
-    >
-      <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
-    </svg>
-  )
 }
 
 
 const Navbar = ({ show }: NavbarProps) => {
   const { user } = useUser();
-
+  const pathname = usePathname();
   return (
     <nav
       className={`text-xl w-full ps-5 flex justify-between backdrop-blur-md top-0 left-0 sticky z-10 transition-transform duration-300 transform ${
@@ -61,8 +57,8 @@ const Navbar = ({ show }: NavbarProps) => {
           of Maths
         </span>
       </Link>
-      <div className="flex-center justify-between gap-2 md:gap-10 text-[13px] md:text-lg ">
-        <div className="flex flex-row gap-2 md:gap-8">
+      <div className="flex-center place-items-center justify-between gap-2 md:gap-10 text-[13px] md:text-lg hidden">
+        <div className="md:flex flex-row gap-2 md:gap-8 hidden ">
           {navLinks.map((link) => (
             <Link href={link.href} key={link.label}>
               {link.label}
@@ -71,7 +67,7 @@ const Navbar = ({ show }: NavbarProps) => {
         </div>
         <SignedIn>
           <div className="md:bg-white md:p-2 md:rounded-l-xl md:shadow-sm flex-center">
-            <UserButton showName afterSignOutUrl="/"/>
+            <UserButton showName afterSignOutUrl="/" />
           </div>
         </SignedIn>
         <SignedOut>
@@ -79,6 +75,62 @@ const Navbar = ({ show }: NavbarProps) => {
             <SignInButton />
           </div>
         </SignedOut>
+        <section className="w-full max-w-[264px] md:hidden">
+          <Sheet>
+            <SheetTrigger>
+              <Menu size={30} />
+            </SheetTrigger>
+            <SheetContent side={"right"} className="border-none bg-white">
+              <Link
+                className="cursor-pointer flex items-center gap-1 px-4"
+                href="/"
+              >
+                <Image
+                  src={"/logo.svg"}
+                  width={34}
+                  height={34}
+                  alt="BoM Logo"
+                />
+                <h1 className="text-26 font-bold text-black-1">
+                  Because Of Maths
+                </h1>
+              </Link>
+              <div className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
+                <SheetClose asChild>
+                  <nav className="flex h-full flex-col gap-6 pt-16 text-black">
+                    {navLinks.map((item) => {
+                      const isActive =
+                        pathname === item.href ||
+                        pathname.startsWith(`${item.href}/`);
+                      return (
+                        <SheetClose asChild key={item.href}>
+                          <Link
+                            key={item.label}
+                            href={item.href}
+                            className={cn(" flex gap-3 items-center p-4 rounded-lg w-full max-w-60", {
+                              "bg-[#0179FE]": isActive,
+                            })}
+                          >
+                            <p
+                              className={cn(
+                                "text-16 font-semibold text-black-2",
+                                {
+                                  "!text-white": isActive,
+                                }
+                              )}
+                            >
+                              {item.label}
+                            </p>
+                          </Link>
+                        </SheetClose>
+                      );
+                    })}
+                  </nav>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </section>
       </div>
     </nav>
   );

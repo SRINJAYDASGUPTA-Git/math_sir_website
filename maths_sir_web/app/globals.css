@@ -89,6 +89,6 @@
   @apply hidden md:text-xl md:block;
 }
 
-.cl-internal-1j7ahlv{
-  @apply w-[20px] h-[20px] md:w-[40px] md:h-[40px]
+.cl-avatarBox,.cl-avatarImage, .cl-userButtonAvatarImage, .cl-userButtonBox{
+  @apply w-[32px] h-[32px] md:w-[40px] md:h-[40px]
 }
