@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { courseData } from "@/constants";
 import { addCourseToUser } from "@/utils";
@@ -6,20 +6,41 @@ import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Navbar from "@/components/shared/Navbar";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const Course = ({ params: { id } }: { params: { id: string } }) => {
   const { user } = useUser();
   const course = courseData.find((course) => course.id === id);
   const userEmail = user?.emailAddresses[0].emailAddress;
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const handleEnroll = async () => {
     await addCourseToUser(userEmail!, course?.id!);
-    router.push('/')
+    const courses:string[] = user?.publicMetadata?.courses as string[] || [];
+    const metadata = { userId: user?.id, courses: courses.concat(course?.id!) };
+    try {
+      setLoading(true);
+      const response = await fetch("/api/publicMeta", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(metadata),
+      });
+
+      if (response) console.log(response);
+    } catch (error: any) {
+      throw new Error(error);
+    } finally {
+      setLoading(false);
+    }
+    router.push("/");
   };
 
-  if (!user)
-    return <div className="w-full h-full flex-center">Loading....</div>
+  if (!user || !user.publicMetadata){
+    setLoading(true);
+    return <div className="w-full h-full flex-center">Loading....</div>;
+  }
 
   return (
     <section>
@@ -40,8 +61,14 @@ const Course = ({ params: { id } }: { params: { id: string } }) => {
             />
           </div>
         </div>
-        <Button className="bg-[#9747FF] w-fit text-xl p-4" onClick={handleEnroll}>
-          Enroll Now
+        <Button
+          className="bg-[#9747FF] w-fit text-xl p-4"
+          onClick={handleEnroll}
+          disabled={loading || (user.publicMetadata?.courses as string[])?.includes(course?.id!)}
+        >
+          {
+            loading? "Enrolling...": (user.publicMetadata?.courses as string[])?.includes(course?.id!)?"Enrolled":"Enroll Now"
+          }
         </Button>
       </div>
     </section>

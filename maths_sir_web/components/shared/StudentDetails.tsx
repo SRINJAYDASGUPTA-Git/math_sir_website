@@ -2,7 +2,7 @@
 import { User, getUsersFromCourse } from "@/utils";
 import { courseData } from "@/constants";
 import { useEffect, useState } from "react";
-import DataTable from "./DataTable";
+import StudentDataTable from "./DataTable";
 const fetchStudents = async (courseId: string) => {
     try {
       const users = await getUsersFromCourse(courseId);
@@ -34,7 +34,7 @@ const StudentDetails = ({course}:{course:string}) => {
       <section className="w-full flex flex-col gap-4 p-5">
         <div className="p-5 bg-[#f5f5f5] rounded-xl shadow-md">
           <h1 className="text-xl md:text-4xl underline">Students of {courseHead}</h1>
-            <DataTable data={students!} />
+            <StudentDataTable data={students!} />
         </div>
       </section>
     </>

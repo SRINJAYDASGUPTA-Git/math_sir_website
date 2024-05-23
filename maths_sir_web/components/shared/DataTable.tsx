@@ -125,7 +125,7 @@ export const columns: ColumnDef<User>[] = [
   },
 ]
 
-export function DataTable({data}:{data:User[]}) {
+export function StudentDataTable({data}:{data:User[]}) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -270,4 +270,4 @@ export function DataTable({data}:{data:User[]}) {
   )
 }
 
-export default DataTable
+export default StudentDataTable
