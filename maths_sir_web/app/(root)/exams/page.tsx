@@ -16,7 +16,7 @@ const Exam = () => {
     const { user } = useUser();
     const [isAdmin, setisAdmin] = useState<boolean>(false);
     const userEmail = user?.emailAddresses?.[0]?.emailAddress;
-    const userClass:string[] = user?.publicMetadata?.courses as string[];
+    const userClass: string[] = user?.publicMetadata?.courses as string[];
 
     useEffect(() => {
         const fetchUserCourses = async () => {
@@ -34,15 +34,18 @@ const Exam = () => {
         <section>
             <Navbar show={false} />
             <section>
-                <div className={`${isAdmin?"show":"hidden"}`}>
-                    <ExamForm />
-                </div>
-                <div className={`${isAdmin?"show":"hidden"} w-[30%] flex-center mt-5`}>
-                    <AllExams />
-                </div>
-                <div className={`${!isAdmin?"show":"hidden"} w-[30%] flex-center mt-5`}>
-                    <ExamsByClass standardClass={userClass} />
-                </div>
+                {!isAdmin ?
+                    <div className=' w-[30%] flex-center mt-5'>
+                        <ExamsByClass standardClass={userClass} />
+                    </div> :
+                    <>
+                        <div className={`${isAdmin ? "show" : "hidden"}`}>
+                            <ExamForm />
+                        </div>
+                        <div className={`${isAdmin ? "show" : "hidden"} w-[30%] flex-center mt-5`}>
+                            <AllExams />
+                        </div>
+                    </>}
             </section>
         </section>
     )

@@ -127,7 +127,7 @@ export const getUsersForExam = async (standardClass: string, examId: string): Pr
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      console.log("No users enrolled in the class.");
+      console.log("No users enrolled in the course.");
       return null;
     }
 
@@ -199,16 +199,31 @@ export const addExamMarksToUser = async (email: string, examId: string, marks: s
     const userData = querySnapshot.docs[0].data() as User;
     const userExams = userData.exams || []; // Handle cases where exams might not exist
 
-    userExams.push(`${examId},${marks}`); // Add exam ID and marks as comma-separated string
-
-    await updateDoc(userRef, {
-      exams: userExams,
+    // 3. Find the existing exam entry
+    let examFound = false;
+    const updatedExams = userExams.map((exam) => {
+      const parts = exam.split(",");
+      if (parts[0] === examId) {
+        examFound = true;
+        return `${examId},${marks}`; // Update the marks for the existing exam
+      }
+      return exam;
     });
 
-    console.log("Exam added successfully for user:", email);
+    // If exam not found, add a new entry
+    if (!examFound) {
+      updatedExams.push(`${examId},${marks}`);
+    }
+
+    // 4. Update the user's exams array in Firestore
+    await updateDoc(userRef, {
+      exams: updatedExams,
+    });
+
+    console.log("Exam marks updated successfully for user:", email);
     return true;
   } catch (error) {
-    console.error("Error adding exam to user:", error);
+    console.error("Error updating exam marks for user:", error);
     return false;
   }
 };
@@ -285,6 +300,8 @@ export const getExamScheduleByClass = async (classStandards: string[], date: Dat
     return null;
   }
 };
+
+
 export const getExamById = async (examId: string): Promise<Exam | null> => {
   try {
     const examDoc = await getDoc(doc(db, "exams", examId));
@@ -296,10 +313,42 @@ export const getExamById = async (examId: string): Promise<Exam | null> => {
 
     const examData = examDoc.data() as Exam;
     examData.id = examDoc.id;
-
     return examData;
+
   } catch (error) {
     console.error("Error retrieving exam by ID:", error);
     return null;
   }
 }
+
+
+export const getExamMarksForUser = async (userId: string, examId: string): Promise<string | null> => {
+  try {
+    // 1. Get the User Document
+    const userDoc = await getDoc(doc(db, "users", userId));
+
+    if (!userDoc.exists()) {
+      console.error("User not found:", userId);
+      return null;
+    }
+
+    // 2. Extract User Data
+    const userData = userDoc.data() as User;
+    const userExams = userData.exams || []; // Handle cases where exams might not exist
+
+    // 3. Find the Marks for the Specified Exam ID
+    for (const exam of userExams) {
+      const parts = exam.split(",");
+      if (parts[0] === examId) {
+        return parts[1] || null; // Return the marks if found, handle cases where marks might be missing
+      }
+    }
+
+    console.log("Exam ID not found in user's exams:", examId);
+    return null; // Exam ID not found in user's exams
+
+  } catch (error) {
+    console.error("Error retrieving exam marks for user:", error);
+    return null;
+  }
+};

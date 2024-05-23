@@ -48,10 +48,9 @@ const ExamForm = () => {
   });
   const { user } = useUser();
   const title = "Exam Details";
-  const subtitle = "Enter the details to shedule an upcoming exam";
+  const subtitle = "Enter the details to schedule an upcoming exam";
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
-  const [isAdmin, setisAdmin] = useState<boolean>(false);
   const userEmail = user?.emailAddresses?.[0]?.emailAddress;
 
   const onSubmit = (values: z.infer<typeof examFormSchema>) => {
@@ -73,6 +72,8 @@ const ExamForm = () => {
         } else {
           alert("No Internet!");
         }
+        // Reset the form fields after successful submission
+        form.reset();
       })
       .catch((error) => {
         console.error("Error adding exam:", error);
@@ -134,37 +135,36 @@ const ExamForm = () => {
                             >
                               {field.value
                                 ? classData.find(
-                                    (course) => course.title === field.value
-                                  )?.title
+                                  (course) => course.id === field.value
+                                )?.title
                                 : "Select Course"}
                               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[80vw] md:w-[19vw] p-3 text-[#333] ">
+                        <PopoverContent className="w-[80vw] md:w-[19vw] p-3 text-[#333]">
                           <Command>
                             <CommandInput
                               placeholder="Search Class..."
-                              className="h-9 p-1 text-[#333] "
+                              className="h-9 p-1 text-[#333]"
                             />
                             <CommandList>
                               <CommandEmpty>No Course found.</CommandEmpty>
                               <CommandGroup>
                                 {classData.map((classD) => (
                                   <CommandItem
-                                    value={classD.title}
+                                    value={classD.id}
                                     key={classD.id}
                                     onSelect={() => {
                                       form.setValue("std", classD.id);
+                                      setOpen(false);
                                     }}
                                   >
                                     {classD.title}
                                     <Check
                                       className={cn(
                                         "ml-auto h-4 w-4",
-                                        classD.title === field.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
+                                        classD.id === field.value ? "opacity-100" : "opacity-0"
                                       )}
                                     />
                                   </CommandItem>
