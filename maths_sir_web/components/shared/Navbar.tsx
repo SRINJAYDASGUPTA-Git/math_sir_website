@@ -57,7 +57,7 @@ const Navbar = ({ show }: NavbarProps) => {
           of Maths
         </span>
       </Link>
-      <div className="flex-center place-items-center justify-between gap-2 md:gap-10 text-[13px] md:text-lg hidden">
+      <div className="flex-center place-items-baseline  justify-between gap-2 md:gap-10 text-[13px] md:text-lg">
         <div className="md:flex flex-row gap-2 md:gap-8 hidden ">
           {navLinks.map((link) => (
             <Link href={link.href} key={link.label}>
@@ -75,10 +75,10 @@ const Navbar = ({ show }: NavbarProps) => {
             <SignInButton />
           </div>
         </SignedOut>
-        <section className="w-full max-w-[264px] md:hidden">
+        <section className="w-full max-w-[264px] md:hidden flex-center">
           <Sheet>
-            <SheetTrigger>
-              <Menu size={30} />
+            <SheetTrigger className="items-center text-center h-fit">
+              <Image src={'/hamburger.svg'} height={30} width={30} alt="Menu"/>
             </SheetTrigger>
             <SheetContent side={"right"} className="border-none bg-white">
               <Link
@@ -97,7 +97,7 @@ const Navbar = ({ show }: NavbarProps) => {
               </Link>
               <div className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
                 <SheetClose asChild>
-                  <nav className="flex h-full flex-col gap-6 pt-16 text-black">
+                  <nav className="flex h-full flex-col gap-3 pt-4 text-black">
                     {navLinks.map((item) => {
                       const isActive =
                         pathname === item.href ||
@@ -107,7 +107,7 @@ const Navbar = ({ show }: NavbarProps) => {
                           <Link
                             key={item.label}
                             href={item.href}
-                            className={cn(" flex gap-3 items-center p-4 rounded-lg w-full max-w-60", {
+                            className={cn(" flex gap-3 items-center p-2 rounded-lg w-full max-w-60", {
                               "bg-[#0179FE]": isActive,
                             })}
                           >

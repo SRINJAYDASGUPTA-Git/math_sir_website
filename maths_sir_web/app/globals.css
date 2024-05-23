@@ -89,6 +89,6 @@
   @apply hidden md:text-xl md:block;
 }
 
-.cl-avatarBox,.cl-avatarImage, .cl-userButtonAvatarImage, .cl-userButtonBox{
+.cl-avatarBox,.cl-avatarImage, .cl-userButtonAvatarImage{
   @apply w-[32px] h-[32px] md:w-[40px] md:h-[40px]
 }

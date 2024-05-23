@@ -42,7 +42,7 @@ const Exam = () => {
                         <div className={`${isAdmin ? "show" : "hidden"}`}>
                             <ExamForm />
                         </div>
-                        <div className={`${isAdmin ? "show" : "hidden"} w-[30%] flex-center mt-5`}>
+                        <div className={`${isAdmin ? "show" : "hidden"} w-full md:w-[30%] md:flex-center mt-5 ml-5`}>
                             <AllExams />
                         </div>
                     </>}

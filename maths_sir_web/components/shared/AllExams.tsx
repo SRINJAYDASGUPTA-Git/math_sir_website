@@ -17,7 +17,7 @@ const AllExams = () => {
     fetchExams();
   }, [upcomingExams, pastExams]);
   return (
-    <div className="ml-5">
+    <div className="p-3">
       <h2>Upcoming Exams</h2>
       {loading ? (
         <div>Loading...</div>
@@ -26,7 +26,7 @@ const AllExams = () => {
           <Link
             href={`/exams/${exam.id}`}
             key={index}
-            className="flex flex-col p-3 border border-black rounded-md w-fit ml-10 mt-5"
+            className="flex flex-col p-3 border border-black rounded-md w-fit mt-5 text-[12px] md:text-base"
           >
             <h3>Exam Name: {exam.examName}</h3>
             <p>Class: {exam.class} </p>
