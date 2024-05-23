@@ -10,12 +10,13 @@ import {
     UserButton,
     useUser,
 } from "@clerk/nextjs";
+import AllExams from "@/components/shared/AllExams";
 
 const Exam = () => {
     const { user } = useUser();
     const [isAdmin, setisAdmin] = useState<boolean>(false);
     const userEmail = user?.emailAddresses?.[0]?.emailAddress;
-    const userClass = user
+    const userClass:string[] = user?.publicMetadata?.courses as string[];
 
     useEffect(() => {
         const fetchUserCourses = async () => {
@@ -36,12 +37,11 @@ const Exam = () => {
                 <div className={`${isAdmin?"show":"hidden"}`}>
                     <ExamForm />
                 </div>
-                <div>
-                    Upcoming Exams
-                    <ExamsByClass standardClass="Class XI (CBSE)"/>
+                <div className={`${isAdmin?"show":"hidden"} w-[30%] flex-center mt-5`}>
+                    <AllExams />
                 </div>
-                <div>
-                    Past Exams
+                <div className={`${!isAdmin?"show":"hidden"} w-[30%] flex-center mt-5`}>
+                    <ExamsByClass standardClass={userClass} />
                 </div>
             </section>
         </section>

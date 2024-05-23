@@ -58,7 +58,7 @@ const ExamForm = () => {
     // Transform form values to match the Exam type
     const examDetails = {
       examName: values.exname,
-      standardClass: values.std,
+      class: values.std,
       description: values.desc,
       totalMarks: parseInt(values.totalmarks),
       date: Timestamp.fromDate(values.date),
@@ -78,7 +78,6 @@ const ExamForm = () => {
         console.error("Error adding exam:", error);
       });
   };
-
 
   if (!user) return <div>Loading...</div>;
   return (
@@ -104,7 +103,11 @@ const ExamForm = () => {
                     <FormItem>
                       <FormLabel>Exam name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Test 1" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0" />
+                        <Input
+                          placeholder="Test 1"
+                          {...field}
+                          className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -130,9 +133,9 @@ const ExamForm = () => {
                               )}
                             >
                               {field.value
-                                ? courseData.find(
-                                  (course) => course.title === field.value
-                                )?.title
+                                ? classData.find(
+                                    (course) => course.title === field.value
+                                  )?.title
                                 : "Select Course"}
                               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
@@ -147,7 +150,7 @@ const ExamForm = () => {
                             <CommandList>
                               <CommandEmpty>No Course found.</CommandEmpty>
                               <CommandGroup>
-                                {courseData.map((classD) => (
+                                {classData.map((classD) => (
                                   <CommandItem
                                     value={classD.title}
                                     key={classD.id}
@@ -225,7 +228,11 @@ const ExamForm = () => {
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Test description" {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0" />
+                        <Textarea
+                          placeholder="Test description"
+                          {...field}
+                          className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -239,7 +246,10 @@ const ExamForm = () => {
                     <FormItem>
                       <FormLabel>Total Marks</FormLabel>
                       <FormControl>
-                        <Input  {...field} className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0" />
+                        <Input
+                          {...field}
+                          className="p-3 rounded-lg focus-visible:ring-0 focus-visible:ring-offset-0"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

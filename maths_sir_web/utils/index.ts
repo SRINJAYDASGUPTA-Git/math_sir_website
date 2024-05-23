@@ -13,9 +13,9 @@ export type User= {
 }
 
 export type Exam = {
+  id?: string;
   class: string;
   examName: string;
-  standardClass: string;
   description: string;
   totalMarks: number;
   date: Timestamp;
@@ -106,7 +106,7 @@ export const addExamToDB = async (exam: Exam) => {
   try {
     const examRef = await addDoc(collection(db, "exams"), {
       examName: exam.examName,
-      standardClass: exam.standardClass,
+      class: exam.class,
       description: exam.description,
       totalMarks: exam.totalMarks,
       date: exam.date,
@@ -229,6 +229,7 @@ export const getExamSchedule = async (date: Date): Promise<{ upcomingExams: Exam
 
     exams.forEach((doc) => {
       const examData = doc.data() as Exam; // Assuming your exam data structure
+      examData.id = doc.id;
 
       // 2. Parse Exam Date (modify to match your date format)
       const examDate = new Date(examData.date.toDate()); // Replace 'date' with your actual date field
@@ -284,3 +285,21 @@ export const getExamScheduleByClass = async (classStandards: string[], date: Dat
     return null;
   }
 };
+export const getExamById = async (examId: string): Promise<Exam | null> => {
+  try {
+    const examDoc = await getDoc(doc(db, "exams", examId));
+
+    if (!examDoc.exists()) {
+      console.log("Exam not found:", examId);
+      return null;
+    }
+
+    const examData = examDoc.data() as Exam;
+    examData.id = examDoc.id;
+
+    return examData;
+  } catch (error) {
+    console.error("Error retrieving exam by ID:", error);
+    return null;
+  }
+}
