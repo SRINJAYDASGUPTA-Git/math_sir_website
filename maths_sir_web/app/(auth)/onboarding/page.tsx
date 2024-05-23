@@ -22,7 +22,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { classData, onboardingFormSchema } from "@/constants";
+import { classes, onboardingFormSchema } from "@/constants";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -194,7 +194,7 @@ const Onboarding = () => {
                               )}
                             >
                               {field.value
-                                ? classData.find(
+                                ? classes.find(
                                   (classD) => classD.title === field.value
                                 )?.title
                                 : "Select Class"}
@@ -211,7 +211,7 @@ const Onboarding = () => {
                             <CommandList>
                               <CommandEmpty>No framework found.</CommandEmpty>
                               <CommandGroup>
-                                {classData.map((classD) => (
+                                {classes.map((classD) => (
                                   <CommandItem
                                     value={classD.title}
                                     key={classD.id}

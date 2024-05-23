@@ -31,6 +31,15 @@ export const slideImage = [
   }
 ]
 
+export const classes = [
+  { id: 'ix(cbse)', title: 'Class IX (CBSE)' },
+  { id: 'ix(icse)', title: 'Class IX (ICSE)' },
+  { id: 'x(cbse)', title: 'Class X (CBSE)' },
+  { id: 'x(icse)', title: 'Class X (ICSE)' },
+  { id: 'xi', title: 'Class XI' },
+  { id: 'xii', title: 'Class XII' },
+]
+
 export const classData = [
     { id: 'ix(cbse)', title: 'Class IX (CBSE)' },
     { id: 'ix(icse)', title: 'Class IX (ICSE)' },
