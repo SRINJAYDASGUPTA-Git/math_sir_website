@@ -1,22 +1,29 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
-import Navbar from "@/components/shared/Navbar";
+import Navbar from "../../../../components/shared/Navbar";
 import React, { useEffect, useState } from "react";
 import {
+  Exam,
   addExamMarksToUser,
   getExamById,
-  getUsersForExam,
   getExamMarksForUser,
-  Exam,
-} from "@/utils";
-
+  getUsersForExam,
+} from "../../../../utils";
 const Page = ({ params: { id } }: { params: { id: string } }) => {
   const { user } = useUser();
   const router = useRouter();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [exam, setExam] = useState<Exam | null>(null);
-  const [users, setUsers] = useState<{ email: string; name: string; examId: string | null; marks: string | null }[] | null>(null);
+  const [users, setUsers] = useState<
+    | {
+        email: string;
+        name: string;
+        examId: string | null;
+        marks: string | null;
+      }[]
+    | null
+  >(null);
   const [userMarks, setUserMarks] = useState<string | null>(null);
 
   const userEmail = user?.emailAddresses?.[0]?.emailAddress;
@@ -71,10 +78,18 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
         {exam && (
           <div className="flex flex-col text-center">
             <h1 className="text-2xl font-bold mb-4">{exam.examName}</h1>
-            <p className="mb-2"><b>Description:</b> {exam.description}</p>
-            <p className="mb-2"><b>Class:</b> {exam.class}</p>
-            <p className="mb-2"><b>Total Marks:</b> {exam.totalMarks}</p>
-            <p className="mb-4"><b>Date:</b> {exam.date.toDate().toDateString()}</p>
+            <p className="mb-2">
+              <b>Description:</b> {exam.description}
+            </p>
+            <p className="mb-2">
+              <b>Class:</b> {exam.class}
+            </p>
+            <p className="mb-2">
+              <b>Total Marks:</b> {exam.totalMarks}
+            </p>
+            <p className="mb-4">
+              <b>Date:</b> {exam.date.toDate().toDateString()}
+            </p>
           </div>
         )}
         {isAdmin ? (
@@ -86,7 +101,10 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
                 marks = value;
               };
               return (
-                <section key={user.email} className="flex flex-row justify-start placed items-center border shadow-sm mb-4 p-4 rounded">
+                <section
+                  key={user.email}
+                  className="flex flex-row justify-start placed items-center border shadow-sm mb-4 p-4 rounded"
+                >
                   <div className="p-4">
                     <p className="mb-2">
                       Email: {user.email} <br />
@@ -117,7 +135,9 @@ const Page = ({ params: { id } }: { params: { id: string } }) => {
         ) : (
           <>
             <h2 className="text-xl font-bold mb-4">Your Exam Marks</h2>
-            <p className="mb-2"><b>Marks:</b> {userMarks ?? "No marks available"}</p>
+            <p className="mb-2">
+              <b>Marks:</b> {userMarks ?? "No marks available"}
+            </p>
           </>
         )}
       </div>
