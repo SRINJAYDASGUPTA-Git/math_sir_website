@@ -43,10 +43,7 @@ const Contact = () => {
   const [loading, setLoading] = useState<boolean>(false)
   async function onSubmit(values: z.infer<typeof contactFormSchema>) {
     const from = "Admin<admin@becauseofmaths.in>";
-    const to = [
-      "dasguptasrinjay2004@gmail.com",
-      "dasguptasrinjayyt2004@gmail.com",
-    ];
+    const to = process.env.NEXT_PUBLIC_ADMIN_EMAIL_ID;
 
     const subject = `${values.fullName}'s Message`
     const content:Content = {
