@@ -5,6 +5,7 @@ const protectedRoutes = createRouteMatcher([
   '/contact',
   '/note',
   '/exams/(.*)',
+  '/exams'
 ])
 
 export default clerkMiddleware((auth, req)=>{

@@ -57,7 +57,7 @@ const Navbar = ({ show }: NavbarProps) => {
           of Maths
         </span>
       </Link>
-      <div className="flex-center place-items-baseline  justify-between gap-2 md:gap-10 text-[13px] md:text-lg">
+      <div className="flex-center place-items-baseline w-[30%] md:w-fit justify-between gap-2 md:gap-10 text-[13px] md:text-lg">
         <div className="md:flex flex-row gap-2 md:gap-8 hidden ">
           {navLinks.map((link) => (
             <Link href={link.href} key={link.label}>
@@ -71,8 +71,8 @@ const Navbar = ({ show }: NavbarProps) => {
           </div>
         </SignedIn>
         <SignedOut>
-          <div className="flex items-center justify-center rounded-2xl shadow md:p-1 px-2 md:px-5 bg-[#FDD7BB] text-[10px] md:text-lg">
-            <SignInButton />
+          <div className="flex-center rounded-2xl shadow md:p-1 px-2 md:px-5 bg-[#FDD7BB] md:text-lg w-full" >
+            <SignInButton/>
           </div>
         </SignedOut>
         <section className="w-full max-w-[264px] md:hidden flex-center">
