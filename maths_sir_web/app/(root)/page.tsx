@@ -27,6 +27,7 @@ import { addUsersToDB, getUserCourses } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import StudentDetails from "@/components/shared/StudentDetails";
+import ExamsByClass from "@/components/shared/ExamsByClass";
 
 export default function Home() {
   const router = useRouter();
@@ -46,11 +47,9 @@ export default function Home() {
         setCourses_subed(userCourses);
       }
     };
-
-    console.log(user?.publicMetadata)
     fetchUserCourses();
   }, [user]);
-
+console.log(courses_subed)
   const controlNavbar = useCallback(() => {
     const scrollThreshold = 300; // Define the scroll threshold here
     if (window.scrollY > scrollThreshold && window.scrollY > lastScrollY) {
@@ -215,12 +214,12 @@ export default function Home() {
           ) : (
             <>
               <section className="w-full h-fit bg-white pt-5 px-10">
-                <p className="p-7 text-4xl font-bold text-[#232323]">
+                <p className="p-2 md:p-7 text-2xl md:text-4xl font-bold text-[#232323]">
                   Upcoming Exams
                 </p>
                 <div className="w-full p-5 flex-center flex-wrap">
-                  {courses_subed ? (
-                    <div></div>
+                  {courses_subed?.length ?? 0 > 0 ? (
+                    <ExamsByClass standardClass={courses_subed ?? []} />
                   ) : (
                     <div className="flex-center flex-col gap-3">
                       <Image
@@ -246,14 +245,15 @@ export default function Home() {
               </section>
 
               <section className="w-full h-fit bg-white pt-5 px-10">
-                <p className="p-7 text-4xl font-bold text-[#232323]">
+                <p className="p-2 md:p-7 text-2xl md:text-4xl font-bold text-[#232323]">
                   Your Courses
                 </p>
                 <div className="w-full p-5 flex-center flex-wrap">
-                  {courses_subed ? (
+                  {courses_subed?.length ?? 0 > 0 ? (
                     courses_subed?.map((course_sub: string) =>
                       courseDataSignedIn.map((course) => {
                         if (course.id === course_sub) {
+                          console.log()
                           return (
                             <div
                               key={course.id}
@@ -267,7 +267,8 @@ export default function Home() {
                             </div>
                           );
                         }
-                        return null; //Return null for courses not found in both arrays
+                        else 
+                          return null; //Return null for courses not found in both arrays
                       })
                     )
                   ) : (
@@ -295,15 +296,20 @@ export default function Home() {
               </section>
 
               <section className="w-full h-fit bg-white px-10 pt-5">
-                <p className="p-7 text-4xl font-bold text-[#232323]">Courses</p>
+                <p className="p-2 md:p-7 text-2xl md:text-4xl font-bold text-[#232323]">
+                  Other Courses
+                </p>
                 <div className="w-full p-5 flex-center flex-wrap">
                   {courseDataSignedIn.map((course) => {
                     return (
-                      <div
+                      !courses_subed?.includes(course.id) &&  <div
                         key={course.id}
                         className="md:basis-1/2 lg:basis-1/4 flex place-items-end"
                       >
-                        <CourseCardSignedIn {...course} />
+                        {
+                          
+                          <CourseCardSignedIn {...course} />
+                        }
                       </div>
                     );
                   })}

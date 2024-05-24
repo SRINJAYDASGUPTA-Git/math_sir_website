@@ -102,6 +102,30 @@ export const getUsersFromCourse = async (
   });
 };
 
+export const getUserFromEmail = async (
+  email: string
+): Promise<User | null> => {
+  try {
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.log("No matching documents.");
+      return null;
+    }
+
+    let user: User | null = null;
+
+    querySnapshot.forEach((doc) => {
+      user = doc.data() as User;
+    });
+
+    return user;
+  } catch (error) {
+    console.error("Error retrieving user from email:", error);
+    return null;
+  }
+}
 export const addExamToDB = async (exam: Exam) => {
   try {
     const examRef = await addDoc(collection(db, "exams"), {
@@ -245,7 +269,7 @@ export const getExamSchedule = async (date: Date): Promise<{ upcomingExams: Exam
     exams.forEach((doc) => {
       const examData = doc.data() as Exam; // Assuming your exam data structure
       examData.id = doc.id;
-
+      console.log(examData)
       // 2. Parse Exam Date (modify to match your date format)
       const examDate = new Date(examData.date.toDate()); // Replace 'date' with your actual date field
 
@@ -280,14 +304,15 @@ export const getExamScheduleByClass = async (classStandards: string[], date: Dat
 
     exams.forEach((doc) => {
       const examData = doc.data() as Exam; // Assuming your exam data structure
-
+      examData.id = doc.id;
       // 2. Parse Exam Date (modify to match your date format)
       const examDate = new Date(examData.date.toDate()); // Replace 'date' with your actual date field
-
       // 3. Check Class Standard and Compare Dates
       if (classStandards.some((standardClass) => examData.class === standardClass)) {
+        
         if (examDate > date) {
           upcomingExams.push(examData);
+          console.log(upcomingExams)
         } else {
           pastExams.push(examData);
         }

@@ -29,13 +29,13 @@ const Exam = () => {
 
         fetchUserCourses();
     }, [userEmail]);
-
+    console.log(userClass)
     return (
         <section>
             <Navbar show={false} />
             <section>
                 {!isAdmin ?
-                    <div className=' w-[30%] flex-center mt-5'>
+                    <div className='w-[100%] flex-center mt-5'>
                         <ExamsByClass standardClass={userClass} />
                     </div> :
                     <>

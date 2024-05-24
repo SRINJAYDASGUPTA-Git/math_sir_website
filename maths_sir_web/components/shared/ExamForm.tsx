@@ -134,7 +134,7 @@ const ExamForm = () => {
                               )}
                             >
                               {field.value
-                                ? classData.find(
+                                ? courseData.find(
                                   (course) => course.id === field.value
                                 )?.title
                                 : "Select Course"}
@@ -151,7 +151,7 @@ const ExamForm = () => {
                             <CommandList>
                               <CommandEmpty>No Course found.</CommandEmpty>
                               <CommandGroup>
-                                {classData.map((classD) => (
+                                {courseData.map((classD) => (
                                   <CommandItem
                                     value={classD.id}
                                     key={classD.id}
