@@ -36,7 +36,7 @@ const ExamsByClass: React.FC<ExamsByClassProps> = ({ standardClass }) => {
   const pathname = usePathname();
   return (
     <div className="ml-5 gap-3">
-      <h2 className={`${pathname === '/'? 'hidden':''}`}>Upcoming Exams</h2>
+      <h2 className={`${pathname === "/" ? "hidden" : ""}`}>Upcoming Exams</h2>
       {loading ? (
         <div>Loading...</div>
       ) : upcomingExams && upcomingExams.length ? (
@@ -67,21 +67,22 @@ const ExamsByClass: React.FC<ExamsByClassProps> = ({ standardClass }) => {
           </span>
         </div>
       )}
-      <div className={`${pathname === '/'? 'hidden':''}`}>
+      <div className={`${pathname === "/" ? "hidden" : ""}`}>
         <h2>Past Exams</h2>
         {loading ? (
           <div>Loading...</div>
         ) : pastExams && pastExams.length ? (
           pastExams.map((exam, index) => (
-            <div
+            <Link
+              href={`/exams/${exam.id}`}
               key={index}
-              className="flex flex-col p-3 border border-black rounded-md w-full md:w-fit ml-10 mt-5 text-[12px] md:text-base"
+              className="flex flex-col p-3 border border-black rounded-md w-fit ml-10 mt-5"
             >
               <h3>Exam Name: {exam.examName}</h3>
               <p>Description: {exam.description}</p>
               <p>Total Marks: {exam.totalMarks}</p>
               <p>Date: {exam.date.toDate().toLocaleDateString()}</p>
-            </div>
+            </Link>
           ))
         ) : (
           <div className="flex-center flex-col gap-3 w-full">
